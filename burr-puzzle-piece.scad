@@ -40,7 +40,7 @@ module sharp_burr_piece(size, length, tolerance, pattern) {
 		translate([tolerance/2,tolerance/2,tolerance/2])
 		cube([length*size-tolerance,size*2-tolerance,size*2-tolerance]);
 		translate([size*2-tolerance/2,-tolerance/2,-tolerance/2])
-		for(i=[0:5]){
+		for(i=[0:length-5]){
 			for(j=[0:3]){
 				if(!pattern[i][j]){
 					translate([size*i,size*floor(j/2),size*(j%2)]) cube([cude_size, cude_size, cude_size]);
