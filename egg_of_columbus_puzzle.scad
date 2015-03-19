@@ -8,10 +8,13 @@ module egg_of_columbus_puzzle(size, height, cut_width) {
     small_circle_radius = 2-sqrt(2);
 difference() {
     egg(size, height, cut_width);
-    #cube([5*size,cut_width,3*height],center=true);
-    #cube([cut_width,5*size,3*height],center=true);
-    #translate([size,0,0])rotate(a=[0,0,45])cube([cut_width,5*size,3*height],center=true);
-    #translate([-size,0,0])rotate(a=[0,0,-45])cube([cut_width,5*size,3*height],center=true);  #translate([-size*(1-small_circle_radius)/2,-size*(1-small_circle_radius)/2,0])rotate(a=[0,0,45])cube([cut_width,small_circle_radius*size,3*height],center=true);    #translate([size*(1-small_circle_radius)/2,-size*(1-small_circle_radius)/2,0])rotate(a=[0,0,-45])cube([cut_width,small_circle_radius*size,3*height],center=true);
+    cube([5*size,cut_width,3*height],center=true);
+    translate([0,2.5*size,0]) cube([cut_width,5*size,3*height],center=true);
+    translate([0,-5*small_circle_radius*size+cut_width,0]) cube([cut_width,5*size,3*height],center=true);
+    translate([size,0,0])rotate(a=[0,0,45])cube([cut_width,5*size,3*height],center=true);
+    translate([-size,0,0])rotate(a=[0,0,-45])cube([cut_width,5*size,3*height],center=true);
+    translate([-size*(1-small_circle_radius)/2,-size*(1-small_circle_radius)/2,0])rotate(a=[0,0,45])cube([cut_width,small_circle_radius*size,3*height],center=true);
+    translate([size*(1-small_circle_radius)/2,-size*(1-small_circle_radius)/2,0])rotate(a=[0,0,-45])cube([cut_width,small_circle_radius*size,3*height],center=true);
 }
 }
 
