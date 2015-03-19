@@ -1,7 +1,7 @@
 length = 10;
 size = 6;
-tolerance = 0.3;
-bevel_radius = 0.3;
+tolerance = 0.15;
+bevel_radius = 1;
 distance = 2*size + 2;
 
 burr_piece(size, length, tolerance, bevel_radius, [[0,0,1,1],[0,0,1,0],[0,0,1,1],[0,0,1,1],[0,0,1,0],[0,0,1,1]]);
@@ -26,7 +26,7 @@ module burr_piece(size, length, tolerance, bevel_radius, pattern) {
 	if(bevel_radius){
 		minkowski()
 		{
-			sphere(r = bevel_radius);
+			sphere(r = bevel_radius, $fn=10);
 			sharp_burr_piece(size, length, tolerance + bevel_radius*2, pattern);
 		}
 	} else {
