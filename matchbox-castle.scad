@@ -5,13 +5,13 @@ castle();
 
 module castle() {
     spacing = UNIT;
-    for (a =[1:8]) translate([0,spacing*a,0]) wall();
-    for (a =[1:10]) translate([spacing,spacing*a,0]) fence();
-    for (a =[1:2]) translate([spacing*2,spacing*a,0]) gate();
-    for (a =[1:6]) translate([spacing*3,spacing*a,0]) roof(UNIT/2);
-    translate([spacing*4, 0, 0]) roof(10); //??????
-    translate([spacing*5, 0, 0]) tower(UNIT*0.91);
-    translate([spacing*6, 0, 0]) tower(UNIT*0.76);
+    for (a =[1:8]) translate([0,spacing*a,0]) rotate([90,0,0]) wall();
+    for (a =[1:10]) translate([spacing,spacing*a,0]) rotate([90,0,0]) fence();
+    for (a =[1:2]) translate([spacing*2,spacing*a,0]) rotate([90,0,0]) gate();
+    for (a =[1:6]) translate([spacing*3,spacing*a,0]) rotate([90,135,0]) roof(UNIT/2);
+    translate([spacing*4, 0, 0])rotate([90,135,0]) roof(10); //??????
+    translate([spacing*5, 0, 0]) rotate([90,0,0]) tower(UNIT*0.91);
+    translate([spacing*6, 0, 0]) rotate([90,0,0]) tower(UNIT*0.76);
     
 }
 
@@ -28,7 +28,7 @@ module gate() {
     difference() {
         cube([UNIT/2, UNIT/4, UNIT/2]);
         translate([UNIT/8,0,0]) cube([UNIT/4, UNIT/4, UNIT/5]);
-        translate([UNIT/4,UNIT/4,UNIT/5]) rotate([90,0,0])cylinder(UNIT/4, UNIT/8, UNIT/8);
+        translate([UNIT/4,UNIT/4,UNIT/5]) rotate([90,0,0]) cylinder(UNIT/4, UNIT/8, UNIT/8);
     }
 }
 
