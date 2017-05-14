@@ -8,10 +8,10 @@ thickness = 10; // [1:0.5:50]
 width = 5; // [1:0.5:50]
 
 // Number of vertices on the sphere
-number_of_vertices = 30; // [1:0.5:50]
+number_of_vertices = 30; // [1:50]
 
 // Percentage of edges that are connected ( Higher means more edges, make sure you can put the light blob in when you increase this number )
-connection_rate = 10; // [1:100]
+connection_rate = 11; // [1:100]
 
 // Random seed for generating vertices and edges ( Use the same seed to get the same design )
 seed = 3; // [1:10000]
@@ -68,8 +68,8 @@ module random_shade(radius, thickness, number_of_vertices, width, connection_rat
                 if (abs(z3) / sqrt(pow(x3,2)+pow(y3,2)) < 0.8391)
                 if (random_vect[number_of_vertices*2 + (i+1)*j - 1]*100 < connection_rate) hull(){
 
-                    rotate(vertices[i]) cylinder(radius*10, width/2, width/2);
-                    rotate(vertices[j]) cylinder(radius*10, width/2, width/2);
+                    rotate(vertices[i]) cylinder(radius*5, width/2, width/2);
+                    rotate(vertices[j]) cylinder(radius*5, width/2, width/2);
                 }
             }
         }
