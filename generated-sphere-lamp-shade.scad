@@ -2,19 +2,20 @@
 radius = 80; // [1:0.5:400]
 
 // Thickness of the edges
-thickness = 10; // [1:0.5:50]
+thickness = 5; // [1:0.5:50]
 
-// Width of the edges
-width = 5; // [1:0.5:50]
 
 // Number of vertices on the sphere
 number_of_vertices = 30; // [1:50]
 
 // Percentage of edges that are connected ( Higher means more edges, make sure you can put the light blob in when you increase this number )
-connection_rate = 11; // [1:100]
+connection_rate = 2; // [1:100]
+
+
+shape = "circle"; // [square, circle]
 
 // Random seed for generating vertices and edges ( Use the same seed to get the same design )
-seed = 3; // [1:10000]
+seed = 5; // [1:10000]
 
 
 // Specification for the adapter to the base
@@ -53,8 +54,7 @@ module random_shade(radius, thickness, number_of_vertices, width, connection_rat
     */
 //    for(i=[0:number_of_vertices])
 //        translate(vertices_in_c[i]) cube(20,20,20, true)
-    
-    intersection() {
+     intersection() {
         difference() {
             sphere(radius+thickness);
             sphere(radius);
@@ -62,18 +62,32 @@ module random_shade(radius, thickness, number_of_vertices, width, connection_rat
 
         for(i=[0:number_of_vertices]) {
             if (i+1 < number_of_vertices) for(j=[i+1:number_of_vertices]) {
-                    x3 = vertices_in_c[i][1]*vertices_in_c[j][2] - vertices_in_c[j][1]*vertices_in_c[i][2];
-                    y3 = vertices_in_c[j][0]*vertices_in_c[i][2] - vertices_in_c[i][0]*vertices_in_c[j][2];
-                    z3 = vertices_in_c[i][0]*vertices_in_c[j][1] - vertices_in_c[j][0]*vertices_in_c[i][1];
-                if (abs(z3) / sqrt(pow(x3,2)+pow(y3,2)) < 0.8391)
-                if (random_vect[number_of_vertices*2 + (i+1)*j - 1]*100 < connection_rate) hull(){
+//                    x3 = vertices_in_c[i][1]*vertices_in_c[j][2] - vertices_in_c[j][1]*vertices_in_c[i][2];
+//                    y3 = vertices_in_c[j][0]*vertices_in_c[i][2] - vertices_in_c[i][0]*vertices_in_c[j][2];
+//                    z3 = vertices_in_c[i][0]*vertices_in_c[j][1] - vertices_in_c[j][0]*vertices_in_c[i][1];
+//                if (abs(z3) / sqrt(pow(x3,2)+pow(y3,2)) < 0.8391)
+//                if (random_vect[number_of_vertices*2 + (i+1)*j - 1]*100 < connection_rate) hull(){
 
-                    rotate(vertices[i]) cylinder(radius*5, width/2, width/2);
-                    rotate(vertices[j]) cylinder(radius*5, width/2, width/2);
-                }
+                    //#rotate(vertices[i]) cylinder(radius*10, width/2, width/2);
+                    //#rotate(vertices[j]) cylinder(radius*10, width/2, width/2);
+//                }
+                
+                if (random_vect[number_of_vertices*2 + (i+1)*j - 1]*100 < connection_rate)
+                    rotate(vertices[i]) rotate([0,90,vertices[j][1]]) rotate_extrude(angle = vertices[j][2])  translate([radius+thickness/2, 0, 0]) shape(shape, thickness);
+                    //rotate(vertices[i]) cylinder(radius*10, width/2, width/2);
+                    //rotate(vertices[j]) cylinder(radius*10, width/2, width/2);
+               
             }
         }
 
+    }
+}
+
+module shape (shape, size) {
+    if(shape == "circle") {
+        circle(size/2);
+    } else {
+        square(size, center = true);
     }
 }
 
