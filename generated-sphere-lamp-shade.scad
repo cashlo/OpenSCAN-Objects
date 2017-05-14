@@ -1,14 +1,27 @@
-radius = 80;
-thickness = 10;
-number_of_vertices = 30;
-width = 5;
-connection_rate = 10;
-seed = 3;
+// Radius of the sphere
+radius = 80; // [1:0.5:400]
 
-adapter_inner_diameter = 41;
-adapter_mid_diameter = 60;
-adapter_outer_diameter = 80;
-adapter_height = 3;
+// Thickness of the edges
+thickness = 10; // [1:0.5:50]
+
+// Width of the edges
+width = 5; // [1:0.5:50]
+
+// Number of vertices on the sphere
+number_of_vertices = 30; // [1:0.5:50]
+
+// Percentage of edges that are connected ( Higher means more edges, make sure you can put the light blob in when you increase this number )
+connection_rate = 10; // [1:100]
+
+// Random seed for generating vertices and edges ( Use the same seed to get the same design )
+seed = 3; // [1:10000]
+
+
+// Specification for the adapter to the base
+adapter_inner_diameter = 41; // [1:0.5:100]
+adapter_mid_diameter = 60; // [1:0.5:100]
+adapter_outer_diameter = 80; // [1:0.5:100]
+adapter_height = 3; // [1:0.5:20]
 
 translate([0,0,radius]) difference() {
     cylinder(h=adapter_height, d=adapter_outer_diameter, center=true);
