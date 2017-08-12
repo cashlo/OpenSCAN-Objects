@@ -1,7 +1,9 @@
 intersection(){
     octahedron(30+6);
-    translate([0,1.5,0]) connector(3, 3, 30, 0.7, 2, 3, 2, true);
+    translate([0,1.5,0]) connector(3, 3, 30, 0.7, 2, 3, 4, true);
 }
+
+//arm(3, 3, 30, 0.7, 2, 3, 2, true);
 
 module connector(board_t, wall_t, arm_w, teeth_r, teeth_o, teeth_n, side_n, back) {
         
@@ -36,10 +38,10 @@ module arm(board_t, wall_t, arm_w, teeth_r, teeth_o, teeth_n) {
         translate([wall_t,wall_t,wall_t]) cube([board_t,arm_w-wall_t,arm_w-wall_t]);
     }
     for(t = [1:teeth_n]){
-        translate([wall_t, arm_w-teeth_o,arm_w-teeth_o-(teeth_o+teeth_r)*t ]) sphere(teeth_r);
-        translate([wall_t, arm_w-teeth_o-(teeth_o+teeth_r)*t,arm_w-teeth_o ]) sphere(teeth_r);
-        translate([board_t+wall_t, arm_w-teeth_o,arm_w-teeth_o-(teeth_o+teeth_r)*t ]) sphere(teeth_r);
-        translate([board_t+wall_t, arm_w-teeth_o-(teeth_o+teeth_r)*t,arm_w-teeth_o ]) sphere(teeth_r);
+        #translate([wall_t, arm_w/2-teeth_o+(teeth_o+teeth_r)*t ,arm_w/2-teeth_o-(teeth_o+teeth_r)*t ]) sphere(teeth_r);
+        #translate([wall_t, arm_w/2-teeth_o-(teeth_o+teeth_r)*t ,arm_w/2-teeth_o+(teeth_o+teeth_r)*t ]) sphere(teeth_r);
+        #translate([wall_t+board_t, arm_w/2-teeth_o+(teeth_o+teeth_r)*t ,arm_w/2-teeth_o-(teeth_o+teeth_r)*t ]) sphere(teeth_r);
+        #translate([wall_t+board_t, arm_w/2-teeth_o-(teeth_o+teeth_r)*t ,arm_w/2-teeth_o+(teeth_o+teeth_r)*t ]) sphere(teeth_r);
     }
 }
 module octahedron (w) {
