@@ -1,6 +1,6 @@
 intersection(){
-    octahedron(30+6);
-    translate([0,1.5,0]) connector(3, 3, 30, 0.7, 2, 3, 4, true);
+    octahedron(30+14);
+    translate([0,1.5,0]) connector(3, 2, 40, 0.7, 2, 3, 2, true);
 }
 
 //arm(3, 3, 30, 0.7, 2, 3, 2, true);
