@@ -2,14 +2,14 @@
 ay = 20; // [1:100]
 
 // X coordinate of second vertex B
-bx = 10; // [1:100]
+bx = 15; // [1:100]
 // Y coordinate of second vertex B
 by = -10; // [-100:-1]
 
 // X coordinate of third vertex C
-cx = -10; // [-100:-1]
+cx = -15; // [-100:-1]
 // Y coordinate of third vertex C
-cy = -50; // [-100:-1]
+cy = -30; // [-100:-1]
 
 // Additional padding
 padding = 0; // [0:100]
@@ -33,29 +33,44 @@ vnc = [-cx, cy];
     ca = distance(vc, va);
 
 
-step = 0.1;
+slices = 30;
 
-for (a =[0:step:1-step]) {
+for (s =[0:slices-1]) {
     
-    i = 1 - a;
-    na = a + step;
-    ni = 1 - na;
+    a = s/slices;
+    
+    r = cos(a*180)/2 + 0.5;
+    i = 1 - r;
+    
+    na = a + 1/slices;
+    nr = cos(na*180)/2 + 0.5;
+    ni = 1 - nr;
+    
+    echo(a=a, r=r, na=na, nr=nr);
     
     hull(){
-        rotate([0, a*180, 0]) linear_extrude(0.1) ccw(va, vb*i + vnc*a, vc*i + vnb*a, padding, width);
-        rotate([0, na*180, 0]) linear_extrude(0.1) ccw(va, vb*ni + vnc*na, vc*ni + vnb*na, padding, width);
+        rotate([0, a*180, 0]) linear_extrude(0.1) ccw(va, vb*i + vnc*r, vc*i + vnb*r, padding, width);
+        rotate([0, na*180, 0]) linear_extrude(0.1) ccw(va, vb*ni + vnc*nr, vc*ni + vnb*nr, padding, width);
     }
 }
 
-for (a =[0:step:1-step]) {
-    i = 1 - a;
-    na = a + step;
-    ni = 1 - na;
-    translate([0,0,200]) hull(){
-       rotate([0, a*180, 0]) linear_extrude(0.1) polygon([va, vb*i + vnc*a, vc*i + vnb*a]);
-        rotate([0, na*180, 0]) linear_extrude(0.1) polygon([va, vb*ni + vnc*na, vc*ni + vnb*na]);
-    }
-}
+//for (a =[0:step:1-step]) {
+//    
+//    r = cos(a*180)/2 + 0.5;
+//    i = 1 - r;
+//    
+//    
+//    na = a + step;
+//    nr = cos(na*180)/2 + 0.5;
+//    ni = 1 - nr;
+//    
+//    echo(a=a, r=r, na=na, nr=nr);
+//    
+//    translate([0,0,200]) hull(){
+//       rotate([0, a*180, 0]) linear_extrude(0.1) polygon([va, vb*i + vnc*r, vc*i + vnb*r]);
+//       rotate([0, na*180, 0]) linear_extrude(0.1) polygon([va, vb*ni + vnc*nr, vc*ni + vnb*nr]);
+//    }
+//}
 
 //    !union(){
 //    a = $t;
