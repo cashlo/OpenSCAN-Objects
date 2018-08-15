@@ -1,9 +1,9 @@
 
 // Radius of the ring (half of the print bad size)
-size = 100; // [50:400]
+size = 125; // [50:400]
 
 // Size of the rounded corner, higher is more rouned.You get a circle if = [size], you get a square with rounded corners if = [ring_width]
-corner_size = 80; // [10:400]
+corner_size = 125; // [10:400]
 
 // Width of the ring
 ring_width = 30; // [10:100]
@@ -12,9 +12,36 @@ ring_width = 30; // [10:100]
 
 $fn=100;
 
-for (i = [0:3]){
-    rotate([0,0,90*i])
-    arm();
+tooth_size = 10;
+
+q_ring();
+
+module q_ring() {
+difference(){
+    half_ring();
+    rotate([0,0,-90-120]) cube([corner_size, corner_size, 20]);
+}
+
+intersection(){
+    half_ring();
+    rotate([0,0,-120]) interface();
+}
+}
+module half_ring() {
+    difference(){
+    for (i = [2:3]){
+        rotate([0,0,90*i])
+        arm();
+    }
+    interface();
+    }
+}
+
+module interface() {
+    for (i = [size-ring_width:tooth_size*2:size]){
+    translate([i, 0, 0]) rotate([50,0,0]) cube([tooth_size, tooth_size, 20]);
+    translate([i+tooth_size, -10, 0]) rotate([-50,0,0]) cube([tooth_size, tooth_size, 20]);    
+    }
 }
 
 module arm() {
