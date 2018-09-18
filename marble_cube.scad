@@ -11,30 +11,37 @@ clearance = 0.2;
 $fn=20;
 
 difference(){
-    cube([cube_size,cube_size,cube_size], true);
-    
-    #translate([0,0,cube_size/2])
-    rotate([90,0,0])    
-    cylinder(cube_size+1, d1=tube_size, d2=tube_size, center = true);
-    
-    #translate([0,0,0])
-    rotate([90,0,0])    
-    cylinder(cube_size+1, d1=tube_size, d2=tube_size, center = true);
-    
-    #translate([0,0,-cube_size/2])
-    rotate([90,0,90])    
-    cylinder(cube_size+1, d1=tube_size, d2=tube_size, center = true);
-    
-    face_connectors();
-    rotate([180,0,0]) face_connectors();
+    base_cube();
+    translate([0,0,cube_size/2]) tube2();
+    #tube1();
 }
-face_plugs();
-rotate([180,0,0]) face_plugs();
+
+module base_cube(){
+    difference(){
+        cube([cube_size,cube_size,cube_size], true);
+        face_connectors();
+        rotate([180,0,0]) face_connectors();
+    }
+    face_plugs();
+    rotate([180,0,0]) face_plugs();
+}
+
 module face_connectors(){
     translate([ hole_offset, hole_offset,cube_size/2-connector_height/2]) connector();
     translate([-hole_offset, hole_offset,cube_size/2-connector_height/2]) connector();
     translate([ hole_offset,-hole_offset,cube_size/2-connector_height/2]) connector();
     translate([-hole_offset,-hole_offset,cube_size/2-connector_height/2]) connector();    
+}
+
+module tube1() {
+    rotate([90,0,0])    
+    cylinder(cube_size+1, d1=tube_size, d2=tube_size, center = true);   
+}
+module tube2() {
+    translate([edge_size+tube_size/2,edge_size+tube_size/2,0])
+    rotate_extrude()
+    translate([edge_size+tube_size/2,0,0])
+    circle(d=tube_size);
 }
 
 module face_plugs(){
