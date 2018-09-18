@@ -18,6 +18,8 @@ total_size = size + margin + border*2;
 window_size = size + margin;
 clearance = 0.2;
 
+$fn = 20;
+
 module half_prison() {
     difference(){
         cube(total_size);
@@ -46,14 +48,12 @@ module lock_ring() {
 module joint_ring() {
     difference() {
         cylinder(joint_ring_size, joint_hole_radius+joint_ring_size, joint_hole_radius+joint_ring_size);
-        cylinder(joint_ring_size, joint_hole_radius, lock_hole_radius);
+        cylinder(joint_ring_size, joint_hole_radius, joint_hole_radius);
     }
     translate([joint_hole_radius,0,0]) cube([joint_ring_size, (joint_ring_size+joint_hole_radius)*2, joint_ring_size]);
 }
 
 half_prison();
-
-translate([total_size.x/2,0,0]) cube([clearance,100,clearance], true);
 
 translate([-lock_rings*(lock_ring_size+clearance)+clearance/2,0,0])
 for(i=[0:lock_rings-1]){

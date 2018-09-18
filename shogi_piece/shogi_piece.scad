@@ -52,7 +52,7 @@ pawn = [[-42.2,-79,0], 0, 0.30];
 tokin = [[-93,-46,0], 0, 0.30];
 
 module word(word_pos, word_scale, A, B, a1, a2) {
-    for (i = [0:1/word_levels:1]){
+    !for (i = [0:1/word_levels:1]){
     translate([0,0,-i-1/word_levels])
     linear_extrude(height = 1/word_levels, center = false, convexity = 10)
     offset(-i)
