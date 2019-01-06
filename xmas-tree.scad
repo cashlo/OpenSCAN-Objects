@@ -1,60 +1,88 @@
-height = 200;
-width = 0.55;
-min_width = 0.8;
-tree_r = 0.6;
-branch_w = 7;
-branch_r = 0.065;
-seed = 4;
-clearance = 0.25;
+height = 200; // [50:300]
 
-print_top = false;
-print_mid = false;
-print_bottom = true;
+// Ratio of width to height
+width = 0.55; // [0.1:0.05:1]
 
+// Minimum width of branches, 2x nozzle size is a good start
+min_width = 0.8; // [0.1:0.1:4]
 
-if (print_top) difference() {
-    linear_extrude(branch_w/3) {
-        tree(height, branch_w, branch_r, seed);
-        translate([0, -height*width/2]) square([branch_w, height*width]);
+// Ratio to scale down to subtree
+tree_r = 0.6; // [0.1:0.1:1]
+
+// Width of the starting branch 
+branch_w = 7; // [1:20]
+
+// Distance between branches as ratio of the height
+branch_r = 0.06; // [0.05:0.005:0.5]
+
+clearance = 0.25; // [0:0.01:0.3]
+
+// Change this to get a different shape with the same parameters
+seed = 4; // [1:1000]
+
+part = "all"; // [top,middle,bottom,all]
+
+if (part == "top") {
+    top_part();
+} else if (part == "middle") {
+    middle_part();
+} else if (part == "bottom") {
+    bottom_part();
+} else if (part == "all"){
+    top_part();
+    middle_part();
+    bottom_part();
+}
+
+module top_part() {
+    difference() {
+        linear_extrude(branch_w/3) {
+            tree(height, branch_w, branch_r, seed);
+            translate([0, -height*width/2]) square([branch_w, height*width]);
+        }
+        #translate ([height/3+clearance/2,0,branch_w/6])
+        rotate([120,0,0])
+        cube([height*2/3+clearance, branch_w, branch_w/3+clearance], true);
+        
+        translate ([height/6+clearance/2,0,branch_w/6])
+        rotate([240,0,0])
+        cube([height*1/3+clearance, branch_w, branch_w/3+clearance], true);
     }
-    #translate ([height/3+clearance/2,0,branch_w/6])
-    rotate([120,0,0])
-    cube([height*2/3+clearance, branch_w, branch_w/3+clearance], true);
-    
-    translate ([height/6+clearance/2,0,branch_w/6])
-    rotate([240,0,0])
-    cube([height*1/3+clearance, branch_w, branch_w/3+clearance], true);
 }
 
- if (print_mid)translate ([height,height*width*1.2,0]) rotate([0,0,180]) difference() {
-    linear_extrude(branch_w/3) {
-        tree(height, branch_w, branch_r, seed+1);
-        translate([0, -height*width/2]) square([branch_w, height*width]);
-    } 
-    
-    #translate ([height/6+clearance/2,0,branch_w/6])
-    rotate([120,0,0])
-    cube([height*1/3+clearance, branch_w, branch_w/3+clearance], true);
-    
-    #translate ([height*5/6+clearance/2,0,branch_w/6])
-    rotate([-120,0,0])
-    cube([height*1/3+clearance, branch_w, branch_w/3+clearance], true);
-}
-if (print_bottom) translate ([0,height*width*2.4,0]) difference() {
-    linear_extrude(branch_w/3) {
-        tree(height, branch_w, branch_r, seed+2);
-        translate([0, -height*width/2]) square([branch_w, height*width]);
+module middle_part() {
+    translate ([height,height*width*1.2,0]) rotate([0,0,180]) difference() {
+        linear_extrude(branch_w/3) {
+            tree(height, branch_w, branch_r, seed+1);
+            translate([0, -height*width/2]) square([branch_w, height*width]);
+        } 
+        
+        #translate ([height/6+clearance/2,0,branch_w/6])
+        rotate([120,0,0])
+        cube([height*1/3+clearance, branch_w, branch_w/3+clearance], true);
+        
+        #translate ([height*5/6+clearance/2,0,branch_w/6])
+        rotate([-120,0,0])
+        cube([height*1/3+clearance, branch_w, branch_w/3+clearance], true);
     }
-    
-    #translate ([height*2/3+clearance/2,0,branch_w/6])
-    rotate([120,0,0])
-    cube([height*2/3+clearance, branch_w, branch_w/3+clearance], true);
-    
-    translate ([height*2/3+clearance/2,0,branch_w/6])
-    rotate([240,0,0])
-    cube([height*2/3+clearance, branch_w, branch_w/3+clearance], true);
 }
 
+module bottom_part() {
+    translate ([0,height*width*2.4,0]) difference() {
+        linear_extrude(branch_w/3) {
+            tree(height, branch_w, branch_r, seed+2);
+            translate([0, -height*width/2]) square([branch_w, height*width]);
+        }
+        
+        #translate ([height*2/3+clearance/2,0,branch_w/6])
+        rotate([120,0,0])
+        cube([height*2/3+clearance, branch_w, branch_w/3+clearance], true);
+        
+        translate ([height*2/3+clearance/2,0,branch_w/6])
+        rotate([240,0,0])
+        cube([height*2/3+clearance, branch_w, branch_w/3+clearance], true);
+    }
+}
 
 
 module tree(height, branch_w, branch_r, seed) {

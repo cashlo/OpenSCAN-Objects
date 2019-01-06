@@ -11,9 +11,51 @@ clearance = 0.2;
 $fn=20;
 
 difference(){
-    base_cube();
-    translate([0,0,cube_size/2]) tube2();
-    #tube1();
+    base_piece(4);
+    
+}
+
+module base_piece(multiple){
+    base_size = cube_size+clearance;
+    for(x = [0 : base_size : base_size*(multiple-1)]) {
+    for(y = [0 : base_size : base_size*(multiple-1)]) {
+        translate([x,y,0]){
+            difference(){
+                translate([0,0,-0.3])cube([base_size,base_size, connector_height+0.6], true);
+                translate([0,0,-0.3])cube([tube_size,base_size-connector_width, connector_height+0.6], true);
+                translate([0,0,-0.3])cube([base_size-connector_width,tube_size, connector_height+0.6], true);
+                translate([ 0,0,-cube_size/2+connector_height/2]) face_connectors();
+                face_plugs();
+            }
+            translate([ 0,0,-cube_size/2+connector_height/2]) face_plugs();
+        }
+    }}
+}
+
+module cube13() {
+    difference(){
+        base_cube();
+        
+        translate([0,0,cube_size/2]) tube2();
+        tube1();
+        translate([0,0,-cube_size/2]) tube1();
+        translate([0,0,-cube_size/2]) rotate([0,0,90]) tube1();
+    }   
+}
+
+module cube12() {
+    difference(){
+        base_cube();
+        
+        translate([0,0,cube_size/2]) tube1();
+        translate([0,0,cube_size/2]) rotate([0,0,90]) tube1();
+        #translate([0,0,cube_size/2]) rotate([90,0,0]) tube1();
+        intersection(){
+            #translate([0,0,-cube_size/2]) rotate([0,-90,0]) tube2();
+            translate([-cube_size/2,-cube_size/2,-cube_size/2])
+            cube([cube_size,cube_size,cube_size/2]);
+        }
+    }    
 }
 
 module base_cube(){
@@ -35,7 +77,7 @@ module face_connectors(){
 
 module tube1() {
     rotate([90,0,0])    
-    cylinder(cube_size+1, d1=tube_size, d2=tube_size, center = true);   
+    cylinder(cube_size, d1=tube_size, d2=tube_size, center = true);   
 }
 module tube2() {
     translate([edge_size+tube_size/2,edge_size+tube_size/2,0])
