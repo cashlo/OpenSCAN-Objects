@@ -16,10 +16,11 @@ hiragana_list = [
     ["W","わ"," "," "," ","を"]
 ];
 
-size = 10;
+size = 15;
 word_depth = 1;
 font = "MS Gothic:style=Regular";
-font_size = 7;
+font_size = 10;
+corner_size = 3;
 $fn = 50;
 
 for (i = [0:len(hiragana_list)-1]) {
@@ -27,7 +28,7 @@ for (i = [0:len(hiragana_list)-1]) {
     difference(){
         intersection(){
             cube(size);
-            translate([size/2,size/2,size/2])sphere(size-2);
+            translate([size/2,size/2,size/2])sphere(size-corner_size);
             }
         
         
