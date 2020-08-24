@@ -1,7 +1,7 @@
 $fn=50;
 
 
-offset = 0.2;
+offset = 0.1;
 
 rotate([0,90,0])
 difference(){
@@ -18,4 +18,27 @@ difference(){
     
 }
 
-translate([0,0,3-1.3]) cube([100-2,5,1.3]);
+translate([-offset,0,3-1.3]) cube([100-2+offset,10,1.3]);
+
+translate([-offset,0,0]){
+    difference(){
+        rotate([-90,0,0])
+        cylinder(10, r=3);
+        
+        translate([0,0,-5+3-1.3]) cube([5,20,5]);
+    }
+
+    translate([-3,0,-5.5+3-1.3]) cube([3,10,5.5+1.3-3]);
+    
+}
+
+translate([-offset,0,0])
+difference(){
+    union(){
+        sphere(3);
+        translate([0,0,-5.5+3-1.3]) cylinder(5.5+1.3-3, r=3);
+    }
+    translate([0,-3,-5])cube([6,6,10]);
+    
+    #translate([-1,-1.5,-10+3-1.3-3+offset])cube([1,1.5,10]);
+}
