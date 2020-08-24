@@ -13,7 +13,7 @@ difference(){
     translate([70/2-10,0,0]){
         cube([20,10,30]);
         translate([10,0,50])cube([1,10,10]);
-        #translate([10,0,30])scale([1,1,0.8])rotate([-90,0,0])cylinder(10,d=20);
+        translate([10,0,30])scale([1,1,0.8])rotate([-90,0,0])cylinder(10,d=20);
     }
     
     translate([70,70,0])
