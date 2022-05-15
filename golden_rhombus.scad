@@ -8,11 +8,14 @@ obtuse_offset = sqrt(-obtuse_height*obtuse_height+(1+phi*phi));
 
 
 height = 0.7;
-corner = 0.4;
+corner = 0.8;
 
 size = 10;
 
 $fn=50;
+
+hole_size = 0.7;
+hole_offset = 4;
 
 module golden_rhombus (){
     hull(){
@@ -42,8 +45,14 @@ module acute_golden_rhombohedron (){
     }
 }
 
+module ammann_acute_golden_rhombohedron_1 (){
+    acute_golden_rhombohedron();
+    translate([phi*size-corner-hole_offset,0,-corner])
+    sphere(hole_size);
+}
 
 obtuse_golden_rhombohedron();
 
-translate([40,0,0])
-acute_golden_rhombohedron();
+//ammann_acute_golden_rhombohedron_1();
+
+//acute_golden_rhombohedron();

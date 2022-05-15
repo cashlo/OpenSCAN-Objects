@@ -21,8 +21,8 @@ tile(0, 0);
 
 
 module tile(x_offset, y_offset) {
-    //road(x_offset, y_offset);
-    water(x_offset, y_offset);
+    road(x_offset, y_offset);
+    //water(x_offset, y_offset);
     //park(x_offset, y_offset);
 }
     
@@ -43,7 +43,7 @@ module road(x_offset, y_offset){
         linear_extrude(thick-water_gap)
         intersection(){
             translate([x_offset, y_offset, 0]) circle(r=radius-border,$fn=6);
-            import("staticmap-tokyo-road-13.svg", center=true, dpi=50);
+            import("staticmap-amsterdam-road-13.svg", center=true, dpi=50);
         }
     }
 }
