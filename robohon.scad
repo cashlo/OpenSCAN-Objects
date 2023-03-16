@@ -63,7 +63,7 @@ difference(){
         cylinder(h=7+2, d=8);
     }
     translate([0,0,h-2]) cylinder(h=4+2, d=5);
-    translate([0,0,h-2]) cylinder(h=10, d=2);
+    translate([0,0,h-2]) cylinder(h=10, d=2.3);
     translate([0,0,h+8-3+0.01]) gear(number_of_teeth=18,circular_pitch=50,bore_diameter=0,hub_diameter=0,rim_thickness=3);
     
 }
