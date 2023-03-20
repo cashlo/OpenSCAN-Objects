@@ -1,5 +1,8 @@
-cheki_width = 54;
-cheki_height = 86;
+//cheki_width = 54;
+//cheki_height = 86;
+
+cheki_width = 58;
+cheki_height = 89;
 
 frame_width = 4;
 thickness = 4;

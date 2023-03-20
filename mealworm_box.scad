@@ -9,15 +9,55 @@ $fn=200;
 //translate([0,0,10])
 //cylinder_box();
 
-translate([0,0,60])
-cylinder_box_2();
+//translate([0,0,10])
+//cylinder_box_2();
 
-//#base_plate();
+//translate([0,0,80])
+//pupa_stand();
+
+//translate([21.5,0,72])
+//rotate([90,0,0])
+//pupa_leg();
+
+//translate([0,0,60])
+//pupa_bottom();
+base_plate();
 //cylinder_cover();
 
 //translate([wall+margin,wall+margin,wall+margin])
 //bottom();
 
+module pupa_bottom(){
+    difference(){
+        cylinder_bottom();
+        for(r=[0:120:360]){
+            rotate([0,0,r])
+            translate([width/7,0,0])
+            cube([wall*2+margin, wall+margin, wall*4], true);
+        }
+    }
+}
+
+
+module pupa_leg(){
+        cube([wall*4, 20, wall], true);
+        cube([wall*2, 20+wall*2, wall], true);
+}
+
+module pupa_stand(){
+    difference(){
+        cylinder(wall+2, width/4, width/4);
+        translate([0,0,wall])
+        cylinder(2.01, width/4-2, width/4);
+        for(r=[0:120:360]){
+            rotate([0,0,r])
+            translate([width/7,0,0])
+            cube([wall*2+margin, wall+margin, wall*4], true);
+        }
+        
+    }
+    
+}
 
 module bottom() {
     cube([
@@ -25,7 +65,6 @@ module bottom() {
         depth-wall*2-margin*2,
         wall
     ]);
-    
 }
 
 module box() {
@@ -105,14 +144,14 @@ module cylinder_cover() {
 
 module base_plate() {
     difference(){
-    for (d=[0:360/6:360]) {
+    for (d=[0:360/12:360]) {
         echo(d)
         rotate([0,0,d])
-        translate([width/2,0,5/2])
-        cube([wall*2,wall*2,5], true);
+        translate([width/2-wall*1.5,0,wall*2])
+        cube([wall*3,wall*2,wall*4], true);
     }
     translate([0,0,wall+2])
-    cylinder(height, width/2+margin, width/2+margin);
+    cylinder(height, width/2-wall, width/2-wall);
     }
     difference(){
         intersection(){
