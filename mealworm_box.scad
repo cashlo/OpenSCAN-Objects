@@ -9,8 +9,8 @@ $fn=200;
 //translate([0,0,10])
 //cylinder_box();
 
-//translate([0,0,10])
-//cylinder_box_2();
+translate([0,0,10])
+cylinder_box_2();
 
 //translate([0,0,80])
 //pupa_stand();
@@ -21,11 +21,54 @@ $fn=200;
 
 //translate([0,0,60])
 //pupa_bottom();
-base_plate();
+//base_plate();
 //cylinder_cover();
 
 //translate([wall+margin,wall+margin,wall+margin])
 //bottom();
+
+translate([0,0,50])
+roof();
+
+module roof_curve(){
+    rotate_extrude()
+    intersection(){
+    square([width,width]);
+    translate([width*1.3,width*1.3,0])
+    difference(){
+        circle(width*1.5+wall);
+        circle(width*1.5);
+    };
+    }
+}
+
+module roof(){
+    
+    difference(){
+        roof_curve();
+        translate([0,0,width/8])
+        for(r=[0:20:360]){
+            rotate([0,0,r])
+            translate([0,0,0])
+            cube([width*2,2,12], true);
+        }
+        
+        translate([0,0,width/3.5])
+        for(r=[0:20:360]){
+            rotate([0,0,r+10])
+            translate([0,0,0])
+            cube([width*2,2,20], true);
+        }
+        
+    }
+
+    
+    difference(){
+        cylinder(wall, width/2+wall, width/2+wall);
+        cylinder(wall*6+2, width/2+margin, width/2+margin);
+    }
+    
+}
 
 module pupa_bottom(){
     difference(){
