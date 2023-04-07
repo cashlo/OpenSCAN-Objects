@@ -9,26 +9,30 @@ $fn=200;
 //translate([0,0,10])
 //cylinder_box();
 
-translate([0,0,10])
-cylinder_box_2();
+//translate([0,0,10])
+//difference(){
+//    cylinder_box_2();
+//    # cube([margin, 200,200], true);
+//}
 
-//translate([0,0,80])
+//translate([0,0,12])
 //pupa_stand();
 
 //translate([21.5,0,72])
 //rotate([90,0,0])
 //pupa_leg();
 
-//translate([0,0,60])
-//pupa_bottom();
+translate([0,0,60])
+pupa_bottom();
 //base_plate();
 //cylinder_cover();
+//cylinder_bottom();
 
 //translate([wall+margin,wall+margin,wall+margin])
 //bottom();
 
-translate([0,0,50])
-roof();
+//translate([0,0,50])
+//roof();
 
 module roof_curve(){
     rotate_extrude()
@@ -74,9 +78,17 @@ module pupa_bottom(){
     difference(){
         cylinder_bottom();
         for(r=[0:120:360]){
-            rotate([0,0,r])
-            translate([width/7,0,0])
-            cube([wall*2+margin, wall+margin, wall*4], true);
+        rotate([0,0,r])
+        translate([width/7,0,0]){
+            cube([wall*2, 0.1, 15+wall], true);
+        }
+    }
+    }
+    for(r=[0:120:360]){
+        rotate([0,0,r])
+        translate([width/7,0,0]){
+            translate([0,0,(10+wall*4)/2]) cube([wall*2-margin, wall-margin, 10+wall], true);
+            translate([0,0,(10+wall*2)/2]) cube([wall*4-margin, wall-margin, 10], true);
         }
     }
 }
@@ -134,7 +146,7 @@ module cylinder_box_2() {
         cylinder(height, width/2-wall*2, width/2-wall*2);
         
         
-        for(r=[0:5:360]){
+        for(r=[0:10:360]){
             rotate([0,0,r])
             translate([0,0,height*2/3])
             cube([width*2,0.5,12], true);
@@ -180,8 +192,15 @@ module cylinder_bottom() {
 
 
 module cylinder_cover() {
-    cylinder(wall*2, width/2-margin-wall, width/2-margin-wall);
-    cylinder(wall, width/2+wall, width/2+wall);
+    difference(){
+        cylinder(wall*2, width/2-margin-wall, width/2-margin-wall);
+        cylinder(wall*3, width/2-margin-wall*2, width/2-margin-wall*2);
+        
+    }
+    difference(){
+        cylinder(wall, width/2+wall, width/2+wall);
+        cylinder(wall*2, 10, 10);
+    }
     
 }
 
