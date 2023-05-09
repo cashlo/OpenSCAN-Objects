@@ -87,8 +87,8 @@ module pupa_bottom(){
     for(r=[0:120:360]){
         rotate([0,0,r])
         translate([width/7,0,0]){
-            translate([0,0,(10+wall*4)/2]) cube([wall*2-margin, wall-margin, 10+wall], true);
-            translate([0,0,(10+wall*2)/2]) cube([wall*4-margin, wall-margin, 10], true);
+            translate([0,0,(20+wall*4)/2]) cube([wall*2-margin, wall-margin, 20+wall], true);
+            translate([0,0,(20+wall*2)/2]) cube([wall*4-margin, wall-margin, 20], true);
         }
     }
 }
@@ -101,9 +101,9 @@ module pupa_leg(){
 
 module pupa_stand(){
     difference(){
-        cylinder(wall+2, width/4, width/4);
+        cylinder(wall+4, width/4, width/4);
         translate([0,0,wall])
-        cylinder(2.01, width/4-2, width/4);
+        cylinder(4.01, width/4-4, width/4);
         for(r=[0:120:360]){
             rotate([0,0,r])
             translate([width/7,0,0])
