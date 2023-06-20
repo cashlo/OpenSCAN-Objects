@@ -1,11 +1,11 @@
 $fn=1000;
-r = 140;
+r = 120;
 
 //translate([0,0,105+1+3])
 //rotate([90,0,0])
 //LED_half_square_ring();
-translate([0,0,20]) cover();
-//base();
+translate([0,0,30]) cover();
+base();
 corner_r = 30;
 
 module LED_ring(){
@@ -48,12 +48,17 @@ module base(){
         cylinder(h=20, d=105+5);
         
         translate([0,0,105+1+3])
-        rotate([90,0,0])
+        #rotate([90,0,0])
         cylinder(h=12+0.3, r=105+1+0.15, center=true);
         
         translate([0,0,17]) cylinder(h=25, d=105+5-1.5*2);
         translate([0,0,3]) cylinder(h=25, d=105+5-3*2);
-        translate([0,-50,20/2])rotate([90,0,0])cylinder(h=20, d=10.1+0.3);
+        translate([0,-50,20/2])rotate([90,0,0])
+        {
+            cylinder(h=20, d=5);
+            translate([-2.5,0,0])cube([5,50,5]);
+            
+        }
         translate([0,50,20/2])rotate([90,0,0]){
             
             //cube([5.3+0.3,2.3+0.3,20], true);

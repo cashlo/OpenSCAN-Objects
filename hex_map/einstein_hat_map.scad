@@ -6,18 +6,62 @@ water_gap = 1.5;
 
 x_tile_offset = radius*1.5+gap*cos(360/6/2);
 y_tile_offset = radius*cos(360/6/2)*2+gap;
-//tile(0, 0);
-//tile(0, y_tile_offset);
-//tile(0, -y_tile_offset);
+
+super_2_tile();
+
+module super_2_tile() {
+    super_tile();
+    
+    translate([-3,sqrt(3)*5,0])
+    super_tile2();
+    
+    translate([-9,sqrt(3)*1,0])
+    super_tile2();
+    
+    translate([-6,sqrt(3)*2,0])
+    rotate([0,0,60])
+    mono_tile();
+}
+
+module super_tile2() {
+    mono_tile();
+    
+    translate([-3,sqrt(3)*1,0])
+    rotate([0,0,0])
+    mono_tile(1);
+    
+    translate([-0,sqrt(3)*2,0])
+    rotate([0,0,120])
+    mono_tile();
+    
+    translate([-3,sqrt(3)*-1,0])
+    rotate([0,0,120])
+    mono_tile();
+}
+
+module super_tile() {
+    mono_tile();
+    
+    translate([-0,sqrt(3)*2,0])
+    rotate([0,0,-120])
+    mono_tile(1);
+    
+    translate([-3,sqrt(3)*3,0])
+    mono_tile();
+    
+    translate([-3,sqrt(3)*1,0])
+    rotate([0,0,-120])
+    mono_tile();
+}
 
 
-//tile(x_tile_offset, y_tile_offset/2);
-tile(x_tile_offset, -y_tile_offset/2);
-//tile(-x_tile_offset, -y_tile_offset/2);
-//tile(-x_tile_offset, y_tile_offset/2);
-//tile(x_tile_offset, y_tile_offset*1.5);
+module mono_tile(mirror = 0) {
+    monotile = [[0, 0], [0, sqrt(3)], [1, sqrt(3)], [3/2, (3 * sqrt(3))/2], [3, sqrt(3)], [3, 0], [4, 0], [9/2, -(sqrt(3)/2)], [3, -sqrt(3)], [3/2, -(sqrt(3)/2)], [1, -sqrt(3)], [-1, -sqrt(3)], [-(3/2), -(sqrt(3)/2)], [0, 0]];
 
-
+    offset(-0.01)
+    mirror([0,mirror,0])
+    polygon(monotile);
+}
 
 
 module tile(x_offset, y_offset) {
