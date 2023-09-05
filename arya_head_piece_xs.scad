@@ -1,14 +1,15 @@
 $fn=80;
-size1 = 20;
-size2 = 25;
-base_height = 4;
+size1 = 12;
+size2 = 15;
+base_height = 2;
 pointy = false;
+
 /*
 if(!pointy){
  color("gray")
-translate([0,0,base_height+30-19.2])
+translate([0,0,base_height+30-23.7])
 difference(){
-    sphere(6.5);
+    sphere(4);
     translate([0,0,-3])cube([20,20,10], true);
 }
 }
@@ -19,7 +20,7 @@ difference(){
      if(pointy)
         cylinder(  size1,    size1-0.2,    0);
      else
-        cylinder(  size1-5,    size1-0.2,    5);
+        cylinder(  size1-3,    size1-0.2,    3);
      cylinder(  size1-1.2,    size1-0.2-1.2,    0);
   }
  //color("gray")
@@ -34,7 +35,7 @@ difference(){
          cylinder(  1,    size2-1,    size2);
      }
  translate([0,0,0.4])
- cylinder(  base_height-0.4,    size2-10,    size1-0.2-1.2);
+ cylinder(  base_height-0.4,    size2-5,    size1-0.2-1.2);
      
      for(i=[0:1])
      rotate([0,0,90*i])
@@ -42,18 +43,19 @@ difference(){
      cube([100,2.5,2.5], true);
      
      intersection(){
-      cylinder(  0.8,    size2-10,    size2-10);
+      cylinder(  0.8,    size2-5,    size2-5);
     
      for(i=[0:3])
      rotate([0,0,90*i])
-     translate([5,5,0])
+     translate([2,2,0])
      cube([100,100,0.8]);
      
  }
  }
+ 
+ 
  */
- 
- 
+
   
  translate([0,0,base_height])
  color("gold")
@@ -69,7 +71,7 @@ difference(){
          rotate([0,0,360/12*i])
          translate([size1+1,0,-2])
          //sphere(9);
-         sphere(6);
+         sphere(4.5);
      
 }
 
