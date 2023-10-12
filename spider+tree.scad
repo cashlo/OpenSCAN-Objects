@@ -23,10 +23,10 @@ trunk_radius = 20; //[10:35]
 /*[Branches]*/
 
 //Controls the minimum number of branches that will generate from each branch
-min_number_of_branches_from_each_branch = 1; //[1:4]
+min_number_of_branches_from_each_branch = 2; //[1:4]
 
 //Controls the maximum number of branches that will generate from each branch
-max_number_of_branches_from_each_branch = 3; //[2:5]
+max_number_of_branches_from_each_branch = 4; //[2:5]
 
 //How far along a branch do new branches start splitting off
 start_budding_position = 40; //[0:100]
@@ -63,7 +63,7 @@ allowed_overhang_angle = 50; //[30:65]
 /*[Variation]*/
 
 //Change this to get different variants based on your inputs.
-seed = 6; //[0:360]
+seed = 12; //[0:360]
 
 /*[Advanced Settings]*/
 
