@@ -82,6 +82,18 @@ module eleleg_cut(){
     
 }
 
+module tube(){
+    translate([width/2,1,depth/2+wall])
+    rotate([90,0,0])
+        cylinder(
+            wall,
+            5.5/2,
+            6/2,
+            center=true,
+            $fn=40
+    );
+}
+
 module base(){
     difference(){
         chamfered_cube([
@@ -113,9 +125,12 @@ module base(){
         ]);
         
         
+    #tube();
+        
+        
         
         //air gap
-   #
+   
    for(i=[wall*2.5:wall*2:wall*26]){
    translate([-0.5,i,wall*2])
         cube([

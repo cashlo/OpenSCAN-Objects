@@ -1,4 +1,12 @@
-module chamfered_cube(size, chamfer) {
+module chamfered_cube(size, chamfer, center = false) {
+    center_offset = center ? [
+        -size[0]/2,
+        -size[1]/2,
+        -size[2]/2
+    ] : [0,0,0];
+    
+    translate(center_offset)
+    
     difference() {
         cube(size);
         
@@ -12,9 +20,6 @@ module chamfered_cube(size, chamfer) {
         
         translate([size[0],size[1], 0])
         chamfer_cross(size, chamfer);
-        
-        
-        
     }
 }
 
@@ -25,3 +30,5 @@ module chamfer_cross(size, chamfer){
             rotate([45,0,0])
             cube([max(size),chamfer,chamfer], true);
 }
+
+chamfered_cube([10,20,30], 2, true);
