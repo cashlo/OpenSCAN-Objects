@@ -1,41 +1,73 @@
 use <chamfer.scad>;
 
 
-for(i=[0: 4])
-    translate([i*40,0,0])
+//for(i=[0: 4])
+//    translate([i*40,0,0])
 
-slit(0.5+i*0.1);
+//slit(0.5+i*0.1);
 
 diffraction_angle = 90-10;
-tall = 150;
+tall = 200;
 wall = 5;
 width = 30;
 height = 15;
+
+window_size = 11.2;
 
 //slit_side();
 
 //grating_holder();
 
-/*
+intersection(){
+    //translate([-40,20,-100])cube([100,35,89]);
 difference(){
     refle_spec();
     
     rotate([10,0,0])
-    translate([-5,40,-100])
-    cube([10,10,100]);
+    translate([-window_size/2,34.5,-100])
+    cube([window_size,window_size+1,100]);
     
     #rotate([10,0,0])
     translate([-10,20,-10])
     cube([20,30,10]);
     
     // Pixel Fold bump
-    #rotate([10,0,0])
-    translate([-30,34,-21])
-    cube([100, 22, 3]);
+    // rotate([10,0,0])
+    // translate([-30,34,-21])
+    // cube([100, 22, 3]);
     
     
 }
-*/
+}
+
+
+module m2_stand(height=2.5){
+    $fn=20;
+    difference(){
+        cylinder(height, 3.5/2, 3.5/2);
+        cylinder(height+1, 2/2, 2/2);
+    }    
+}
+
+module pi_camera_standoffs(){
+        m2_stand();
+        translate([21,0,0]) m2_stand(2);
+        translate([21,12.5,0]) m2_stand(2);
+        translate([0,12.5,0]) m2_stand(2);
+    
+    difference(){
+        translate([-3,-3,0]) cube([27,24,2]);
+        translate([-1,-1,-1]) cube([23,20,3]);
+    }
+}
+
+module pi_zero_standoffs(){
+        m2_stand();
+        translate([23,0,0]) m2_stand();
+        translate([23,65-7,0]) m2_stand();
+        translate([0,65-7,0]) m2_stand();    
+}
+
 
 module dvd() {
     difference() {
@@ -100,14 +132,24 @@ module refle_spec(){
     translate([-width/2-wall,-height/2-wall,-tall])
     difference(){
         
-        chamfered_cube([width+wall*2, height+wall*2, tall], 1);
-
+        union(){
+            chamfered_cube([width+wall*2, height+wall*2, tall], 1);
+            
+            
+            rotate([90,0,0])
+            translate([wall+(width-23)/2,wall+(width-23)/2,0])
+            pi_zero_standoffs();
+            
+            rotate([90,0,0])
+            translate([wall+(width-21)/2,tall-36.5,-height-wall*2-2])
+            pi_camera_standoffs();
+        }
         
+        // Light path
         translate([wall, wall, -wall])
         cube([width, height, tall]);
         
-        
-        
+        // Slit slot
         translate([wall/2-0.5, wall/2-0.5, 2])
         cube([width+wall+1, 60+1, 1+0.6]);
         
