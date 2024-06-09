@@ -3,22 +3,50 @@ use <chamfer.scad>;
 camera_angle = 45;
 
 diffraction_angle = 45;
-tall = 100;
+tall = 115;
 wall = 5;
 width = 30;
 height = 15;
 
 
-translate([9.5,0,tall])
-rotate([-45,0,0])
-translate([0,8.5,0])
-pi_camera_standoffs();
 
-rotate([90,0,0])
-translate([wall+(width-23)/2,30,0])
-pi_zero_standoffs();
+difference(){
+    translate([wall/2, wall/2, 87]) cube([width+wall, height+wall, 3]);
+    translate([wall, wall, 87]) cube([width, height, 3]);
+}
 
-spec();
+
+intersection(){
+    pi_spec();
+    cube([100, 100, 87]);
+}
+
+translate([0,0,10])
+difference(){
+    pi_spec();
+    cube([100, 100, 87]);
+    
+    difference(){
+        translate([wall/2-0.2, wall/2-0.2, 87]) cube([width+wall+0.4, height+wall+0.4, 3+0.2]);
+        translate([wall, wall, 87]) cube([width, height, 3]);
+    }
+}
+
+module pi_spec(){
+    spec();
+    
+    translate([9.5,0,tall])
+    rotate([-45,0,0])
+    translate([0,27.5,7])
+    mirror([0,1,0])
+    pi_camera_standoffs();
+
+    rotate([90,0,0])
+    translate([wall+(width-23)/2,25,-height-wall*2-2])
+    pi_zero_standoffs();
+}
+
+
 
 module dvd() {
     difference() {
@@ -57,14 +85,15 @@ module pi_camera_standoffs(){
         translate([0,12.5,0]) m2_stand(2);
     
     difference(){
-        translate([-width+23-wall/2,-8,0]) cube([width+wall*2,(height+wall*2)/sin(45)-0.5,2]);
-        translate([-1,-1,-1]) cube([23,20,3]);
+        translate([-width+23-wall/2,-8,-7]) cube([width+wall*2,(height+wall*2)/sin(45)-0.5,9]);
+        #translate([-1,-1,0]) cube([23,20,9]);
+        translate([5,6.5,-20]) cube([11.2, 12.2, 30]);
     }
     
     #
     difference(){
         
-        translate([5,6.5,0]) cube([11.2, 12.2, 10]);
+        
     }
 }
 
@@ -90,7 +119,7 @@ module spec(){
         
         
         
-        translate([wall/2-0.5, -61+height+wall*1.5+0.5, 2])
+        #translate([wall/2-0.5, wall/2-0.5, 2])
         cube([width+wall+1, 60+1, 1+0.6]);
         
     }
