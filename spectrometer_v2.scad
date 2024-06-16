@@ -10,25 +10,32 @@ height = 15;
 
 
 
-difference(){
-    translate([wall/2, wall/2, 87]) cube([width+wall, height+wall, 3]);
-    translate([wall, wall, 87]) cube([width, height, 3]);
-}
+spec_zero_re();
 
 
-intersection(){
-    pi_spec();
-    cube([100, 100, 87]);
-}
-
-translate([0,0,10])
-difference(){
-    pi_spec();
-    cube([100, 100, 87]);
-    
+module spec_zero_re(){
     difference(){
-        translate([wall/2-0.2, wall/2-0.2, 87]) cube([width+wall+0.4, height+wall+0.4, 3+0.2]);
+        translate([wall/2, wall/2, 87]) cube([width+wall, height+wall, 3]);
         translate([wall, wall, 87]) cube([width, height, 3]);
+    }
+
+
+    intersection(){
+        pi_spec();
+        cube([100, 100, 87]);
+    }
+
+
+
+    translate([0,0,10])
+    difference(){
+        pi_spec();
+        cube([100, 100, 87]);
+        
+        difference(){
+            translate([wall/2-0.2, wall/2-0.2, 87]) cube([width+wall+0.4, height+wall+0.4, 3+0.2]);
+            translate([wall, wall, 87]) cube([width, height, 3]);
+        }
     }
 }
 
@@ -88,12 +95,6 @@ module pi_camera_standoffs(){
         translate([-width+23-wall/2,-8,-7]) cube([width+wall*2,(height+wall*2)/sin(45)-0.5,9]);
         #translate([-1,-1,0]) cube([23,20,9]);
         translate([5,6.5,-20]) cube([11.2, 12.2, 30]);
-    }
-    
-    #
-    difference(){
-        
-        
     }
 }
 

@@ -6,11 +6,12 @@ use <chamfer.scad>;
 
 //slit(0.5+i*0.1);
 
-diffraction_angle = 90-10;
-tall = 200;
+angle = 15;
+diffraction_angle = 90-angle;
+tall = 95;
 wall = 5;
 width = 30;
-height = 15;
+height = 20;
 
 window_size = 11.2;
 
@@ -18,42 +19,120 @@ window_size = 11.2;
 
 //grating_holder();
 
-intersection(){
-    //translate([-40,20,-100])cube([100,35,89]);
+$fn=8;
+
+
+translate([0,-10,0]){
 difference(){
-    refle_spec();
     
-    rotate([10,0,0])
-    translate([-window_size/2,34.5,-100])
-    cube([window_size,window_size+1,100]);
+rotate([-angle,0,0])
+spec_zero();
     
-    #rotate([10,0,0])
-    translate([-10,20,-10])
-    cube([20,30,10]);
-    
-    // Pixel Fold bump
-    // rotate([10,0,0])
-    // translate([-30,34,-21])
-    // cube([100, 22, 3]);
-    
-    
+translate([-50, -7, -50])
+cube([100,100,100]);
+
+translate([-width/2-wall,0,-wall*1.5-1.4-height])
+difference(){
+    translate([wall/2-0.15,-12-0.3, wall/2-0.15])
+        cube([width+wall+0.3,5+0.3,height +wall+0.3]);
+    translate([wall, -12-0.3, wall])
+        cube([width, 5+0.3, height-0.1]);
 }
+
+
+translate([0,-30.5,-wall-height/2+1-15.1/2])
+cube([100, 15.1, 15.1]);
+}
+
+translate([-18,-30.45,-14])
+rotate([90,0,0])
+slit(offset=0.5);
+
+translate([-18,-30.45+16,-14])
+rotate([90,0,0])
+slit(offset=0.5);
+
+}
+
+
+
+translate([-width/2-wall,0,-wall*1.5-1.4-height])
+difference(){
+    translate([ wall/2,-12, wall/2])
+        cube([width+wall,5,height +wall]);
+    translate([wall, -12, wall])
+        cube([width, 5, height]);
+}
+
+intersection(){
+translate([-50, -7, -50])
+cube([100,100,100]);
+
+rotate([-angle,0,0])
+spec_zero();
+}
+
+module spec_zero(){
+    rotate([angle,0,0])
+    translate([-11.5,-1.4,1.1])
+    union(){
+        pi_zero_standoffs();
+        difference(){
+            translate([(-width-wall*2+23)/2,-25,-wall])
+            chamfered_cube([width+wall*2,tall-5,wall],1);
+        
+            #pi_zero_standoffs_offsets()
+            translate([0,0,-2.5])
+            cylinder(5, 2/2, 2/2);
+            
+            
+        }
+    }
+    
+                
+                
+    intersection(){
+        //translate([-40,20,-100])cube([100,35,89]);
+    difference(){
+        refle_spec();
+        
+        rotate([10,0,0])
+        translate([-window_size/2,36,-100])
+        cube([window_size,window_size+1,100]);
+        
+        rotate([10,0,0])
+        translate([-10,20,-10])
+        cube([20,30,10]);
+        
+        // Pixel Fold bump
+        // rotate([10,0,0])
+        // translate([-30,34,-21])
+        // cube([100, 22, 3]);
+        
+        
+    }
+    }
 }
 
 
 module m2_stand(height=2.5){
-    $fn=20;
+    
     difference(){
         cylinder(height, 3.5/2, 3.5/2);
         cylinder(height+1, 2/2, 2/2);
     }    
 }
 
+module pi_camera_standoff_offsets(){
+        children();
+        translate([21,0,0]) children();
+        translate([21,12.5,0]) children();
+        translate([0,12.5,0]) children();
+}
+
 module pi_camera_standoffs(){
-        m2_stand();
-        translate([21,0,0]) m2_stand(2);
-        translate([21,12.5,0]) m2_stand(2);
-        translate([0,12.5,0]) m2_stand(2);
+    pi_camera_standoff_offsets()
+    m2_stand(2);
     
     difference(){
         translate([-3,-3,0]) cube([27,24,2]);
@@ -61,11 +140,16 @@ module pi_camera_standoffs(){
     }
 }
 
+module pi_zero_standoffs_offsets(){
+        children();
+        translate([23,0,0]) children();
+        translate([23,65-7,0]) children();
+        translate([0,65-7,0]) children();
+}
+
 module pi_zero_standoffs(){
-        m2_stand();
-        translate([23,0,0]) m2_stand();
-        translate([23,65-7,0]) m2_stand();
-        translate([0,65-7,0]) m2_stand();    
+        pi_zero_standoffs_offsets()
+        m2_stand(); 
 }
 
 
@@ -111,16 +195,6 @@ module slit_side(offset=0){
 module slit(offset=0){
     slit_side(offset/2);
     mirror([0,1,0]) slit_side(offset/2);
-    translate([width/2+wall/2,15,0])
-    difference(){
-    cylinder(1, 10, 10);
-    
-    #
-    translate([8,-1,0])
-    mirror([1,0,0])
-    linear_extrude(0.5)
-    text(str(offset, "mm"), 4);
-    }
 }
 
 module refle_spec(){
@@ -135,23 +209,26 @@ module refle_spec(){
         union(){
             chamfered_cube([width+wall*2, height+wall*2, tall], 1);
             
-            
             rotate([90,0,0])
-            translate([wall+(width-23)/2,wall+(width-23)/2,0])
-            pi_zero_standoffs();
-            
-            rotate([90,0,0])
-            translate([wall+(width-21)/2,tall-36.5,-height-wall*2-2])
+            translate([wall+(width-21)/2,tall-11.5,-height-wall*2-2])
+            mirror([0,1,0])
             pi_camera_standoffs();
         }
+        
+        // screw holes
+        #rotate([90,0,0])
+        translate([wall+(width-21)/2,tall-11.5,-height-wall*2-2])
+        mirror([0,1,0])
+        pi_camera_standoff_offsets()
+        cylinder(5, 2/2, 2/2);
+        
+        
+        
         
         // Light path
         translate([wall, wall, -wall])
         cube([width, height, tall]);
         
-        // Slit slot
-        translate([wall/2-0.5, wall/2-0.5, 2])
-        cube([width+wall+1, 60+1, 1+0.6]);
         
     }
     translate([-50,-50,0])
