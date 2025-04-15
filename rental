@@ -1,0 +1,40 @@
+color("red")
+linear_extrude(2)
+offset(3.5)
+logo();
+
+
+color("white")
+linear_extrude(3)
+logo();
+
+
+module logo(){
+    import("C:/Users/cashr/Downloads/rental_kanojo.svg");
+    translate([0,-10,0])
+    text("PREMIUM", font="Liberation Sans:style=Bold", size=8);
+}
+
+module cta_text(){
+    translate([65,-30,0])
+text("チャンネル登録", font="Zen Kaku Gothic New:style=Bold", halign="center");
+translate([65,-45,0])
+text("高評価", font="Zen Kaku Gothic New:style=Bold", halign="center");
+translate([65,-60,0])
+text("質問・Xは概要欄", font="Zen Kaku Gothic New:style=Bold", halign="center");
+}
+color("white")
+translate([-30,-80,0])
+linear_extrude(1)
+fill()
+text("🤍", font="Segoe UI Emoji:style=Regular", size=100);
+
+color("red")
+linear_extrude(2)
+cta_text();
+
+
+color("white")
+linear_extrude(1)
+offset(5)
+cta_text();
