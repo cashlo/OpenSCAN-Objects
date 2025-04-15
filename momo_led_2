@@ -1,0 +1,315 @@
+use <C:\Users\cashr\Downloads\Kosugi_Maru\KosugiMaru-Regular.ttf>
+use <C:\Users\cashr\OneDrive\Documents\GitHub\OpenSCAN-Objects\text_on.scad>
+use <C:\Users\cashr\OneDrive\Documents\GitHub\OpenSCAN-Objects\fontmetrics.scad>
+use <C:\Users\cashr\Downloads\Kosugi_Maru,Playwrite_FR_Trad\Playwrite_FR_Trad\PlaywriteFRTrad-VariableFont_wght.ttf>
+
+/*
+
+!3d_offset_text_cover("CouleurClarity", 23, "PlaywriteFRTrad");
+*/
+!difference(){
+union(){    
+
+translate([85,-90,0])
+rotate([0,0,0 ])
+3d_offset_text_cover("も", 70, "KosugiMaru");
+translate([175,-90,0])
+3d_offset_text_cover("も", 70, "KosugiMaru");
+/*6
+
+translate([40,45,0])
+rotate([0,0,5])
+3d_offset_text_cover("大", 70, "KosugiMaru");
+
+translate([140,65,0])
+rotate([0,0,-15])
+3d_offset_text_cover("河", 70, "KosugiMaru");
+*/
+}
+3d_offset_text("CouleurClarity", 23, 21, "PlaywriteFRTrad");
+}
+
+
+module 3d_offset_text_cover(text, size, font,offset=1, negative=false, layer_height = 0.2, levels = 10){
+    difference(){
+    if(!negative){    
+    linear_extrude(layer_height*(levels+1))
+    offset(10)
+    text(text,font=font,size=size);
+    }
+    for(i=[0:levels])
+    translate([0,0,layer_height*(i+1)])
+    linear_extrude(layer_height*levels)
+    offset(i/4)
+    text(text,font=font,size=size);
+    }
+}
+
+
+difference(){
+    3d_offset_text("CouleurClarity", 23, 25, "PlaywriteFRTrad", 4);
+    
+    #translate([33,38,0])
+    cylinder(5, 6, 6);
+    
+    #translate([138,1,0])
+    cylinder(5, 6, 6);
+    
+    #translate([172,38,0])
+    cylinder(5, 6, 6);
+    
+    #translate([266,0,0])
+    cylinder(5, 6, 6);
+    
+    #translate([20,-4.5,1])cube([240,10,12]);
+    
+    3d_offset_text("CouleurClarity", 23, 35, "PlaywriteFRTrad", 4, true);
+}
+
+difference(){
+    taiga();
+    
+    3d_offset_text("CouleurClarity", 23, 35, "PlaywriteFRTrad", 4, true);
+    
+    
+    #translate([180,125,1])cube([10,5,12]);
+    #translate([160,115,1])
+    rotate([0,0,-25])cube([5,25,12]);
+    
+    #translate([166,85,1])
+    rotate([0,0,-14])cube([5,20,12]);
+    
+    #translate([199,45,1])
+    rotate([0,0,-14])
+    cube([5,30,12]);
+    
+    #translate([130,51,1])
+    rotate([0,0,-51])
+    cube([5,30,12]);
+    
+    
+    #translate([130,-58,1])
+    rotate([0,0,-90])
+    cube([5,130,12]);
+    
+    
+    #translate([160,-50,1])
+    rotate([0,0,30])
+    cube([5,20,12]);
+    
+    
+    #translate([250,-50,1])
+    rotate([0,0,30])
+    cube([5,20,12]);
+    
+    #translate([81,125,0])
+    cylinder(5, 5, 5);
+    
+    #translate([44,99,0])
+    cylinder(5, 6, 6);
+    
+    #translate([123,105,0])
+    cylinder(5, 6, 6);
+    
+    #translate([49,43,0])
+    cylinder(5, 6, 6);
+    
+    #translate([128,52,0])
+    cylinder(5, 6, 6);
+    
+    #translate([150,61,0])
+    cylinder(5, 6, 6);
+    
+    #translate([206,71,0])
+    cylinder(5, 6, 6);
+    
+    #translate([210,-15,0])
+    cylinder(5, 6, 6);
+    
+    #translate([190,-30,0])
+    cylinder(5, 6, 6);
+    
+    #translate([237,-30,0])
+    cylinder(5, 6, 6);
+    
+    #translate([185,-54,0])
+    cylinder(5, 6, 6);
+    
+    #translate([239,-54,0])
+    cylinder(5, 6, 6);
+    
+    #translate([253,-50,0])
+    cylinder(5, 6, 6);
+    
+    
+    translate([-90,0,0]){
+        #translate([210,-15,0])
+        cylinder(5, 6, 6);
+        
+        #translate([190,-30,0])
+        cylinder(5, 6, 6);
+        
+        #translate([237,-30,0])
+        cylinder(5, 6, 6);
+        
+        #translate([185,-54,0])
+        cylinder(5, 6, 6);
+        
+        #translate([239,-54,0])
+        cylinder(5, 6, 6);
+        
+        #translate([253,-50,0])
+        cylinder(5, 6, 6);
+    }
+    
+}
+
+
+module taiga(offset=4, height=22){
+translate([40,45,0])
+rotate([0,0,5])
+3d_offset_text("大", 70, height, "KosugiMaru",offset=offset);
+translate([140,65,0])
+rotate([0,0,-15])
+3d_offset_text("河", 70, height, "KosugiMaru",offset=offset);
+translate([85,-90,0])
+rotate([0,0,0 ])
+3d_offset_text("も", 70, height, "KosugiMaru",offset=offset);
+translate([175,-90,0])
+3d_offset_text("も", 70, height, "KosugiMaru",offset=offset);
+}
+
+module 3d_offset_text(text, size, height, font,offset=1, negative=false, ){
+    difference(){
+    if(!negative){    
+    linear_extrude(height)
+    offset(10.3)
+    text(text,font=font,size=size);
+    }
+        
+    translate([0,0,1])
+    linear_extrude(height)
+    offset(offset)
+    text(text,font=font,size=size);
+    }
+}
+
+
+
+offset = [0,0.73,0.5,0.5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+module curve_text(text,spacing=1,r=120) {
+for (i=[0:len(text)]){
+        rotate([0,0,-i*spacing+20-offset[i]*spacing])
+        translate([0,r,0])
+        text(text[i], font="PlaywriteFRTrad");
+}
+}
+/*
+difference(){
+    led_sign();
+    #translate([114,68,0])
+    cylinder(50, 4, 4);
+    
+    #translate([60,100,0])
+    cylinder(50, 4, 4);
+    
+    #translate([114,0,0])
+    cylinder(50, 4, 4);
+    
+    
+    #translate([12,68,0])
+    cylinder(50, 4, 4);
+    
+    #translate([10,-3,0])
+    cylinder(50, 4, 4);
+    
+    
+    #translate([130,0,0])
+    cylinder(50, 4, 4);
+    
+    #translate([129,65,0])
+    cylinder(50, 4, 4);
+    
+    #translate([134,98,0])
+    cylinder(50, 4, 4);
+    
+    translate([160,92,0])
+    cylinder(50, 4, 4);
+    
+    #translate([165,65,0])
+    cylinder(50, 4, 4);
+    
+    #translate([200,-3,0])
+    cylinder(50, 4, 4);   
+   
+  
+  
+    #translate([45,-18,0])
+    cylinder(50, 4, 4);
+
+    
+    #translate([80,-38,0])
+    cylinder(50, 4, 4);
+    
+    #translate([82,-68,0])
+    cylinder(50, 4, 4);
+    
+    #translate([18,-38,0])
+    cylinder(50, 4, 4);
+    
+    #translate([16,-68,0])
+    cylinder(50, 4, 4);
+    
+    #translate([100,-63,0])
+    cylinder(50, 4, 4);
+  
+  translate([117,0,0]){
+    #translate([45,-18,0])
+    cylinder(50, 4, 4);
+
+    
+    #translate([80,-38,0])
+    cylinder(50, 4, 4);
+    
+    #translate([82,-68,0])
+    cylinder(50, 4, 4);
+      
+    #translate([18,-38,0])
+    cylinder(50, 4, 4);
+    
+    #translate([16,-68,0])
+    cylinder(50, 4, 4);
+    
+    #translate([100,-63,0])
+    cylinder(50, 4, 4);    
+      
+  }
+  
+}
+*/
+module led_sign(){
+    offset_text("大河", 15, 90);
+    translate([0,-115,0])
+    offset_text("もも", 15, 90);
+}
+
+
+module offset_text(text, offset, size, spacing=0.95) {
+
+
+
+difference(){
+color("pink")
+linear_extrude(12)
+offset(delta=offset)    
+text(text, size=size, spacing=spacing, font="KosugiMaru");
+    
+    
+color("white")
+translate([0,0,2])
+linear_extrude(12)
+text(text, size=size, spacing=spacing, font="KosugiMaru");
+}
+    
+}
