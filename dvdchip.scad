@@ -16,14 +16,14 @@ difference(){
     dvd();
     
     
-    #cube([5,5,10],true);
+    #cube([4.5,4.5,10],true);
     
     
-    #
-    translate([10,0,1.5])
-    cube([30,4,0.4],true);
     
-    #
+    //translate([10,0,1.5])
+    //cube([30,4,0.5],true);
+    
+    
     translate([0,0,6])
     rotate([0,-15,0])
     cube([6,50,6], true);
@@ -44,13 +44,31 @@ rotate([0,0,-90])
 offset(0.2)
 text("分光器", halign="center", size=6.5, font="DotGothic16:style=Regular");
 
+qrback();
+
+module qrback(){
+difference(){
+color("white")
+linear_extrude(0.2)
+offset(0.5, $fn=10)
+square([25, 25], true);
+
+cube([3.5,3.5,10],true);
+}
+}
+
+
+
+difference(){
 qr();
+//#cube([3.5,3.5,10],true);
+}
 
 module qr(){
 color("black")
 linear_extrude(0.2)
 mirror([0,1,0])
-scale(0.33)
+scale(0.3)
 import("frame.svg", center=true);
 }
 
