@@ -1,8 +1,9 @@
 include <BOSL2/std.scad>
 include <BOSL2/gears.scad>
 include <servo_teeth.scad>
+include <bearing.scad>
 
-case_length = 70;
+case_length = 90;
 case_width = 55;
 
 mod=1;
@@ -12,7 +13,7 @@ max_teeth=40;
 gears = 4;
 gear_ratio = 6;
 
-ring_thickness = 7;
+ring_thickness = 10;
 
 
 case(top=true);
@@ -26,14 +27,14 @@ gear_data = planetary_gears(mod=mod, n=gears, max_teeth=max_teeth, sun_carrier=g
 
 
 rotate([-90,0,0])
-up(5)
+down(case_length/2-17-18)
 sun();
 
 
 
 module sun(){
 
-up(9)
+up(15)
 spur_gear(mod=mod, teeth=gear_data[0][1], profile_shift=gear_data[0][2], helical=helical, herringbone=true, gear_spin=gear_data[0][3],clearance=clearance,thickness=18);
 
 
@@ -58,6 +59,12 @@ module top(){
     edges=[BACK, LEFT+BOT, RIGHT+BOT],
     anchor=FRONT);
     
+    fwd(15)
+    rotate([90,0,0]){
+    inner_ring();
+    //outer_ring();
+    }
+    
     for(i=[0:1])
     mirror([0,0,i])
     translate([0,24,-27.5/2])
@@ -67,12 +74,14 @@ module top(){
         cube([16,3.5,8]);
     }
     
-    fwd(7.1){
-    ycyl(l=2-0.2, d=40-0.5, anchor=FRONT);
-    fwd(2)
-    ycyl(l=10, d=30-0.5, anchor=FRONT);
+    fwd(7.1+2+16)
+    difference(){
+    ycyl(l=25, d=30-0.5, anchor=FRONT);
+    ycyl(l=21, d=15, anchor=FRONT);
     }
     
+    
+    fwd(16)
     intersection(){
     ycyl(l=50, d=30-0.5);
     
@@ -86,10 +95,10 @@ module top(){
     
     }
     
-    #fwd(4)
+    fwd(4)
     rotate([90,0,0])
     move_copies(gear_data[2][4])
-    up(-20) cylinder(30, 2.7/2, 2.7/2);
+    up(-20) cylinder(50, 2.7/2, 2.7/2);
     
     
     }
@@ -121,16 +130,22 @@ difference(){
     }
     
     fwd(case_length/2-5-12.2)
-    ycyl(l=43, d=42, anchor=FRONT);
+    ycyl(l=case_length-30, d=43, anchor=FRONT);
     
-    fwd(case_length/2-5-12.2-43+ring_thickness)
+    fwd(-case_length/2+35)
     ycyl(l=ring_thickness+0.3, d=(ring_r+2.4)*2+0.2, anchor=FRONT, $fn=8);
     
-    fwd(case_length/2-5-12.2-43-3){
-    ycyl(l=2+0.5, d=40+0.5, anchor=FRONT);
-    fwd(3)
-    ycyl(l=10+0.5, d=30+0.5, anchor=FRONT);
+    fwd(case_length/2-5-12.2-43){
+    ycyl(l=30+0.5, d=30+1, anchor=FRONT);
     }
+    
+    fwd(-case_length/2+20-0.25){
+    #ycyl(l=10+0.5, d=40+3*2+ball_d+ 0.5, anchor=FRONT, $fn=8);
+    }
+    
+    
+    
+    
     
     for(i=[0:1])
     mirror([i,0,0]){
@@ -183,9 +198,9 @@ rotate([90,0,0])
 
 
 if(true){
-back(case_length/2-7/2-10+0.3)
+back(case_length/2-ring_thickness/2-25+0.15)
 rotate([90,0,0]){
-ring_gear(mod=mod, teeth=gear_data[1][1], profile_shift=gear_data[1][2], helical=helical, herringbone=true, gear_spin=gear_data[1][3],backing=3,thickness=ring_thickness,clearance=clearance, $fn=8);
+//ring_gear(mod=mod, teeth=gear_data[1][1], profile_shift=gear_data[1][2], helical=helical, herringbone=true, gear_spin=gear_data[1][3],backing=3,thickness=ring_thickness,clearance=clearance, $fn=8);
 
 //spur_gear(mod=mod, teeth=gear_data[0][1], profile_shift=gear_data[0][2], helical=helical, herringbone=true, gear_spin=gear_data[0][3],clearance=clearance,thickness=18.5);  //sun
 
