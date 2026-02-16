@@ -16,6 +16,8 @@ gear_ratio = 9;
 ring_thickness = 10;
 bearing_size = 40;
 
+length = 100;
+
 gear_data = planetary_gears(mod=mod, n=gears, max_teeth=max_teeth, sun_carrier=gear_ratio, helical=helical, gear_spin=360/27*$t);
 
 if(true){
@@ -25,8 +27,11 @@ fwd(0.5)
 for(i=[0:1])
 mirror([0,i,0])
 rotate([0,45,0])
-translate([0,-27/2,case_width/2+4])
+translate([0,-27/2,case_width/2+5.5]){
 3d_mouth_with_hole();
+translate([-8,-3.5,-10])
+cube([16,3.5,10]);
+}
 }
 
 if(true)
@@ -39,9 +44,24 @@ difference(){
     cyl(50, 2.8/2, 2.8/2);
     
     fwd(case_length/2-5-12.2)
-        ycyl(l=0.1, d=200, anchor=BACK);
+        ycyl(l=0.1, d=(case_length+length)*3, anchor=BACK);
+        
+    // Screw hole
+    left(case_width/2+15+length){
+        fwd(13)
+        ycyl(l=50, d=8, anchor=BACK);
+        $fn=10;
+        #ycyl(l=150, d=3.1);
+        ycyl(l=2, d2=3.1, d1=6, anchor=BACK);
+        
+        fwd(5)
+        down(5.6/2)
+        cuboid([20,2.5,5.6], anchor=BOT+BACK);
+        
+    }
 }
 
+if(true)
 rotate([-90,0,0])
 sun();
 
@@ -87,7 +107,7 @@ module arm() {
     hull()
     {
     ycyl(l=10, d=ring_r*2, anchor=FRONT);
-    left(case_width/2+15) cuboid([10,10,20],chamfer=2, anchor=FRONT);
+    left(case_width/2+15+length) cuboid([20,10,20],chamfer=2, anchor=FRONT);
     
     }
     
@@ -96,7 +116,7 @@ module arm() {
     hull()
     {
     ycyl(l=10, d=55, anchor=BACK);
-    left(case_width/2+15) cuboid([10,10,20],chamfer=2, anchor=BACK);
+    left(case_width/2+15+length) cuboid([20,10,20],chamfer=2, anchor=BACK);
     
     }
     
@@ -119,8 +139,8 @@ module arm() {
     
     hull()
     {
-    back(case_length/2+1) left(case_width/2+15) cuboid([10,10,20],chamfer=2, anchor=FRONT);
-    fwd(case_length/2+1) left(case_width/2+15) cuboid([10,10,20],chamfer=2, anchor=BACK);
+    back(case_length/2+1) left(case_width/2+15+length) cuboid([20,10,20],chamfer=2, anchor=FRONT);
+    fwd(case_length/2+1) left(case_width/2+15+length) cuboid([20,10,20],chamfer=2, anchor=BACK);
     
     }
     
@@ -134,7 +154,7 @@ module arm() {
     for(i=[0:1])
     mirror([0,i,0])
     rotate([0,-90,0])
-    translate([0,-27/2,case_width/2+20])
+    translate([0,-27/2,case_width/2+25+length])
     3d_mouth_with_hole();
 
 }
