@@ -3,9 +3,9 @@ include <servo_teeth.scad>
 
 
 
-base_x = 70;
-base_y = 110;
-wheel_dist = 50;
+base_x = 30+7.76+40;
+base_y = 120;
+wheel_dist = 70;
 
 base_r = 50;
 n_of_wheels = 2;
@@ -24,8 +24,26 @@ roller_y = 15;
 //mecanum_base();
 
 
-up(50) wheel_attachment_mecanum();
+up(50) big_wheel_attachment();
 
+
+module big_wheel_attachment(){
+difference(){
+cyl(9, d=80, anchor=BOT, chamfer=1, $fn=200);
+
+
+
+for(i=[0:3])
+rotate([0,0,90*i+45]){
+translate([10,0,0])
+cylinder(10, 3.5/2, 3.5/2);
+
+translate([10,0,6])
+cylinder(10, 6/2, 6/2);
+}
+
+}
+}
 
 module wheel_attachment_mecanum(){
 
@@ -42,7 +60,7 @@ cuboid([0.1, 10, 10], anchor=BOT);
 }
 
 difference(){
-cyl(9, d=33.4, anchor=BOT);
+cyl(9, d=33.2, anchor=BOT);
 
 
 for(i=[0:10:360])
@@ -103,16 +121,23 @@ module mecanum_base(){
     //for(j=[0:1])
     //mirror([0,j,0])
     //back(wheel_dist/2)
-    for(i=[0:1])
-    mirror([i,0,0])
-    rotate([0,0,90])
-    translate([0,-27/2,43+top_z])
-    3d_mouth_with_hole();
+    
+//    for(i=[0:1])
+//    mirror([i,0,0])
+//    rotate([0,0,90])
+//    translate([0,-27/2,43+top_z])
+//    3d_mouth_with_hole();
 
     difference(){
-        cuboid([base_x, base_y, 43+top_z],chamfer=1, anchor=BOT);
+        cuboid([base_x, base_y,  43+top_z],chamfer=1, anchor=BOT);
+        inner_x = base_x-roller_y*2-7.76*2+0.01;
+        echo("inner_x: ", inner_x)
         
-        #
+        #up(top_z)
+        cuboid([inner_x, base_y-top_z*2, 40.2-top_z], anchor=BOT);
+        
+        
+        
         xflip_copy()
         yflip_copy()
         rotate([0,0,90])
@@ -120,14 +145,23 @@ module mecanum_base(){
         left(wheel_dist/2){
             cuboid([40.2,roller_y,40.2], anchor=BACK+BOT);
             cuboid([17,roller_y,43+top_z+1], anchor=BACK+BOT);
+            up(40.2)
+            left(17/2)
+            #cuboid([17+50,base_x,top_z+10], anchor=BACK+BOT+LEFT);
+            
+            up(20) cuboid([wheel_dist+40,roller_y,17], anchor=BACK);
+            
+            up(20)
+            right(20)
+           cuboid([wheel_dist-40.2,base_x,17], anchor=BACK+LEFT);
             up(20)
             back(-roller_y)
             rotate([90,0,0])
             rollercan_mount();
         }
        
-       up(30) 
-       cuboid([0.1, base_y*2, (43+top_z)*2], anchor=BOT);
+       //up(30) 
+       //cuboid([0.1, base_y*2, (43+top_z)*2]);
     }
     
     
@@ -186,7 +220,7 @@ module rollercan_mount(){
 }
 
 module technic_hole(){
-    cyl(7.76, d=4.9, anchor=BOT);
+    cyl(7.76, d=5.0, anchor=BOT);
     cyl(0.8,  d=6.2, anchor=BOT);
     up(7.76-0.8)
     cyl(0.8,  d=6.2, anchor=BOT);
