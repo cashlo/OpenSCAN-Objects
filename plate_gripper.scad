@@ -11,56 +11,76 @@ screw_size = "M8";
 
 
 fork_x = 100;
-fork_z = 50;
+fork_z = 70;
 fork_r = 5;
 
 
- up(2){
+%up(2){
 difference(){
     union(){
         cyl(6, d=20, chamfer1=0.5, anchor=BOT);
-        up(3) cyl(6, d=35, chamfer1=0.5, anchor=BOT);
-        fwd(15) up(3) cyl(fork_z, d=fork_r*2, anchor=BOT);
+        up(3) cyl(6, d=40, chamfer=0.5, anchor=BOT);
+        fwd(7) left(15) up(3) cyl(fork_z, d=fork_r*2, anchor=BOT);
+        fwd(-7) left(15) up(3) cyl(fork_z, d=fork_r*2, anchor=BOT);
+        
         
         intersection(){
-        fwd(15) up(3+6) cyl(10, d1=fork_r*2, d1=fork_r*2+15/2, anchor=BOT);
-        cyl(50, d=35, chamfer1=0.5, anchor=BOT);
+        union(){
+        fwd(7) left(15) up(3+5) cyl(5, d2=fork_r*2, d1=fork_r*2+5*2, anchor=BOT);
+        fwd(-7) left(15) up(3+5) cyl(5, d2=fork_r*2, d1=fork_r*2+5*2, anchor=BOT);
+        }
+        cyl(50, d=40, chamfer1=0.5, anchor=BOT);
         
         }
         
         
         
-        up(fork_z+3) fwd(15) sphere(r=fork_r);
+        up(fork_z+3) fwd(7) left(15) sphere(r=fork_r);
+        up(fork_z+3) fwd(-7) left(15) sphere(r=fork_r);
+        
     }
     
+    rotate([0,0,65])
+    up(6) ycyl(200, d=0.4, anchor=BOT);
+    
+    rotate([0,0,-65])
     up(6) ycyl(200, d=0.4, anchor=BOT);
     
     cyl(2, d=6, anchor=BOT);
     
     for(i=[0:3])
-    rotate([0,0,90*i+45])
+    rotate([0,0,90*i])
     left(14/2){
     cyl(20, d=3.5);
-    up(2) cyl(20, d=6, anchor=BOT);
+    up(3) cyl(20, d=6, anchor=BOT);
     }
 }
 }
 
-%up(0){
 
-for(i=[0:1])
-mirror([i,0,0]){
+up(0){
 
-left(fork_x/2)
-cuboid([fork_r, 45.22-8.34, fork_z/2], anchor=BOT+FRONT);
+    for(i=[0:1])
+    left(15)
+    mirror([i,0,0]){
 
-fwd(5)
-left(fork_x/2)
-cyl(fork_z, d=fork_r*2, anchor=BOT+FRONT);
+    left(fork_x/2)
+    back(20.5/2+18.41-10.11)
+    back(6.11+24.45/2)
+    cuboid([fork_r, 45.22, 20], anchor=BOT+BACK);
 
-up(fork_z)
-left(fork_x/2)
-sphere(r=fork_r);
+    fwd(7)
+    left(fork_x/2){
+        cyl(fork_z, d=fork_r*2, anchor=BOT);
+        up(fork_z) sphere(r=fork_r);
+    }
+
+    fwd(-7)
+    left(fork_x/2){
+        cyl(fork_z, d=fork_r*2, anchor=BOT);
+        up(fork_z) sphere(r=fork_r);
+    }
+
 }
 
 
@@ -70,7 +90,7 @@ difference(){
     difference(){
         back(6.11+24.45/2)
         union(){
-            cuboid([fork_x+fork_r*2, 45.22,4], anchor=BOT+BACK);
+            left(15) cuboid([fork_x+fork_r*2, 45.22,4], anchor=BOT+BACK);
 
         }
         
