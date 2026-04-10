@@ -1,6 +1,6 @@
 include <robot_rail.scad>
 
-*rail_with_interface();
+%rail_with_interface();
 
 mod=0.8;
 helical=0;
@@ -16,7 +16,7 @@ ring_thickness= 14;
 number_teeth_wheel_gear = 65;
 
 //left_half(200)
-*kart_motor();
+kart_motor();
 
 
 *for(i=[0:1])
@@ -28,7 +28,7 @@ mirror([0,0,1])
 kart_motor();
 }
 
-intersection(){
+*intersection(){
 ring_gear(mod=mod, teeth=gear_data[1][1], profile_shift=gear_data[1][2], helical=helical, herringbone=true, gear_spin=gear_data[1][3],backing=5,thickness=ring_thickness,clearance=clearance);
 zcyl(ring_thickness, r=or+2+3, chamfer=0.5, $fn=8);
 }
@@ -168,7 +168,7 @@ module motor_mount(z){
     *up(50)
     ring_gear(mod=mod, teeth=gear_data[1][1], profile_shift=gear_data[1][2], helical=helical, herringbone=true, gear_spin=gear_data[1][3],backing=5,thickness=ring_thickness,clearance=clearance);
 
-    up(30+z) sun();
+    *up(30+z) sun();
 
     difference(){
         cuboid([42+motor_shell*2, 42+motor_shell*2, z+62], anchor=BOTTOM);
@@ -178,8 +178,21 @@ module motor_mount(z){
         up(50)
         zcyl(20, d=35, anchor=BOT);
         
-        #up(50)
+        up(50)
         zcyl(14, d=42, anchor=BOT);
+        
+        #up(50)
+        for(i=[0:6:360])
+        rotate([0,0,i])
+        left(21)
+        fwd(0)
+        rotate([0,0,40])
+        cuboid([5.5,0.8,14], anchor=BOT);
+        
+        up(50+14)
+        zcyl(0.2, d=48, anchor=BOT);
+        
+        
         
         
         // Space for ring gear
@@ -230,7 +243,7 @@ module motor_mount(z){
             zcyl(z, d=2.8, anchor=BOT, $fn=10);
             
             #translate([12, 12, 0])
-            zcyl(1.5, d=5.5, anchor=BOT, $fn=10);
+            zcyl(z-1.5, d=5.5, anchor=BOT, $fn=10);
         }
         
     }

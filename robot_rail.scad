@@ -4,13 +4,18 @@ include <BOSL2/gears.scad>
 number_of_teeth = 20;
 
 rail_length = number_of_teeth*PI;
-rail_height = 30;
-rail_width  = 20;
+rail_height = 35;
+rail_width  = 25;
 
 base_height = 6;
 base_width  = 40;
 
 gear_track_width = 5;
+
+
+
+
+*rail_with_interface();
 
 module alig_pin(){
     up(rail_height)
@@ -27,7 +32,7 @@ module alig_pin(){
 
 }
 
-
+module rail_with_interface(){
 difference(){
     rail();
     back(base_width/8)
@@ -57,6 +62,7 @@ difference(){
     rotate([0,0,20])
     cuboid([4,0.8,base_height], anchor=BOTTOM+BACK);
 }
+}
 
 
 module rail(){
@@ -65,7 +71,7 @@ module rail(){
         up(rail_height)
         cuboid([rail_width, rail_length, 1], anchor=FRONT+TOP);
 
-        up(rail_height-rail_width/2)
+        up(rail_height-rail_width/2+gear_track_width/2)
         cuboid([gear_track_width, rail_length, 1], anchor=FRONT+TOP);
     }
 
