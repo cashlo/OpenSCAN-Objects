@@ -30,7 +30,7 @@ kart_motor();
 
 *intersection(){
 ring_gear(mod=mod, teeth=gear_data[1][1], profile_shift=gear_data[1][2], helical=helical, herringbone=true, gear_spin=gear_data[1][3],backing=5,thickness=ring_thickness,clearance=clearance);
-zcyl(ring_thickness, r=or+2+3, chamfer=0.5, $fn=8);
+zcyl(ring_thickness, r=or+2+3+0.2-0.05, chamfer=0.5, $fn=8);
 }
 
 
@@ -74,7 +74,7 @@ module rollerCAN_Lite(){
 module sun(){
 
 up(13)
-spur_gear(mod=mod, teeth=gear_data[0][1], profile_shift=gear_data[0][2], helical=helical, herringbone=true, gear_spin=gear_data[0][3],clearance=clearance,thickness=20);
+spur_gear(mod=mod, teeth=gear_data[0][1], profile_shift=gear_data[0][2], helical=helical, herringbone=true, gear_spin=gear_data[0][3],clearance=clearance,thickness=10);
 
 
 difference(){
@@ -150,7 +150,7 @@ module motor_mount(z){
     %up(57) bearing_6806z();
 
 
-    %up(51)
+    *up(51)
     move_copies(gear_data[2][4]){
         difference(){
         color("red")
@@ -168,7 +168,7 @@ module motor_mount(z){
     *up(50)
     ring_gear(mod=mod, teeth=gear_data[1][1], profile_shift=gear_data[1][2], helical=helical, herringbone=true, gear_spin=gear_data[1][3],backing=5,thickness=ring_thickness,clearance=clearance);
 
-    *up(30+z) sun();
+    up(30+z) sun();
 
     difference(){
         cuboid([42+motor_shell*2, 42+motor_shell*2, z+62], anchor=BOTTOM);

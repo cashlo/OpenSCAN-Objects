@@ -1,22 +1,49 @@
 include <robot_rail.scad>
+include <BOSL2/std.scad>
 
 *rail_with_interface();
 
-rail_height = 35;
+rail_height = 45;
 rail_width  = 25;
 
 
+difference(){
 up(rail_height+2)
-cuboid([rail_width+6,30,10], chamfer=0.5, anchor=BOTTOM);
+cuboid([rail_width+6,30,20], chamfer=0.5, anchor=BOTTOM);
+
+up(rail_height+24/2)
+rotate([0,90,0])
+zcyl(10, d=26, chamfer=0.5);
+
+up(rail_height)
+cuboid([10,26,26/2], chamfer=0.5, anchor=BOTTOM);
+
+up(rail_height)
+cuboid([15,8,26/2-2], chamfer=0.5, anchor=BOTTOM);
+
+up(rail_height+24/2)
+xcyl(15, d=8, chamfer=0.5);
+
+
+
+}
+
+xcyl(15-0.1, d=8-0.1, chamfer=0.5);
+
+up(20)
+bearing_cap();
+
 
 for(i=[0:1])
 mirror([i,0,0])
 {
 
+
+difference(){
 hull(){
     up(rail_height+2)
     right(rail_width/2+2)
-    cuboid([2,30,10], chamfer=0.5, anchor=LEFT+BOTTOM);
+    cuboid([2,30,20], chamfer=0.5, anchor=LEFT+BOTTOM);
 
     up(rail_height-rail_width/4+1)
     right(rail_width/4+2)
@@ -31,6 +58,13 @@ hull(){
     }
 }
 
+#up(rail_height-rail_width/4+1)
+    right(rail_width/4+2)
+    rotate([0,45,0])
+    right(24/2)
+    zcyl(20, d=2.8, chamfer=0.5, anchor=BOT);
+}
+
 
 up(rail_height-rail_width/4+1)
 right(rail_width/4+2)
@@ -39,6 +73,12 @@ right(24/2){
 %bearing_6282z();
 side_kart();
 }
+
+
+%up(rail_height+24/2)
+rotate([0,90,0])
+
+bearing_6282z();
 
 }
 

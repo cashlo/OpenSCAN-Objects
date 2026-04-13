@@ -1,10 +1,10 @@
 include <BOSL2/std.scad>
 include <BOSL2/gears.scad>
 
-number_of_teeth = 20;
+number_of_teeth = 60;
 
 rail_length = number_of_teeth*PI;
-rail_height = 35;
+rail_height = 45;
 rail_width  = 25;
 
 base_height = 6;
