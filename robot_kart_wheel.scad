@@ -6,17 +6,17 @@ include <BOSL2/std.scad>
 rail_height = 45;
 rail_width  = 25;
 
-
+module kart_wheel(){
 difference(){
 up(rail_height+2)
 cuboid([rail_width+6,30,20], chamfer=0.5, anchor=BOTTOM);
 
 up(rail_height+24/2)
 rotate([0,90,0])
-zcyl(10, d=26, chamfer=0.5);
+zcyl(8.5, d=26, chamfer=0.5);
 
 up(rail_height)
-cuboid([10,26,26/2], chamfer=0.5, anchor=BOTTOM);
+cuboid([8.5,26,26/2], chamfer=0.5, anchor=BOTTOM);
 
 up(rail_height)
 cuboid([15,8,26/2-2], chamfer=0.5, anchor=BOTTOM);
@@ -28,9 +28,9 @@ xcyl(15, d=8, chamfer=0.5);
 
 }
 
-xcyl(15-0.1, d=8-0.1, chamfer=0.5);
+*xcyl(15-0.1, d=8-0.1, chamfer=0.5);
 
-up(20)
+*up(20)
 bearing_cap();
 
 
@@ -80,6 +80,7 @@ rotate([0,90,0])
 
 bearing_6282z();
 
+}
 }
 
 module side_kart(){

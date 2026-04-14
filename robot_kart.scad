@@ -1,4 +1,5 @@
 include <robot_rail.scad>
+include <robot_kart_wheel.scad>
 
 %rail_with_interface();
 
@@ -13,11 +14,26 @@ motor_shell = 3;
 
 ring_thickness= 14;
 
-number_teeth_wheel_gear = 65;
+number_teeth_wheel_gear = 70;
 
 //left_half(200)
-kart_motor();
+//kart_motor();
 
+*stablizer();
+
+module stablizer(){
+    up(rail_height+2+0.1)
+    cuboid([33, 80-28, 20-0.1], anchor=BOTTOM, chamfer=0.5);
+
+    fwd(40)
+    kart_wheel();
+
+    back(40)
+    kart_wheel();
+}
+
+
+//gear_wheel_upper();
 
 *for(i=[0:1])
 mirror([i,0,0])
@@ -28,7 +44,7 @@ mirror([0,0,1])
 kart_motor();
 }
 
-*intersection(){
+intersection(){
 ring_gear(mod=mod, teeth=gear_data[1][1], profile_shift=gear_data[1][2], helical=helical, herringbone=true, gear_spin=gear_data[1][3],backing=5,thickness=ring_thickness,clearance=clearance);
 zcyl(ring_thickness, r=or+2+3+0.2-0.05, chamfer=0.5, $fn=8);
 }
@@ -36,7 +52,7 @@ zcyl(ring_thickness, r=or+2+3+0.2-0.05, chamfer=0.5, $fn=8);
 
 module kart_motor(){
     motor_mount(5);
-    *up(77) 
+    up(77) 
     mirror([0,0,1])
     gear_wheel();
 }
@@ -103,19 +119,19 @@ module gear_wheel(){
 module gear_wheel_upper(){
     difference(){
         union(){
-            up(8+5+7/2)
+            up(8+5+7/2-0.5)
             zcyl(l=7/2, d=30-0.2, chamfer1=0.5, anchor=BOTTOM);
             
-            up(8+5+7)
+            up(8+5+7-0.5)
             zcyl(l=2, d=32, chamfer1=0.8, anchor=BOTTOM);
             
-            up(8+5+7+2)
+            up(8+5+7-0.5+2)
             move_copies(gear_data[2][4])
             cyl(4, d=6, anchor=BOTTOM);
         }
     
         move_copies(gear_data[2][4])
-        zcyl(50, d=3.3, anchor=BOTTOM);
+        zcyl(50, d=3.3, anchor=BOTTOM, $fn=10);
     }
 
 }
