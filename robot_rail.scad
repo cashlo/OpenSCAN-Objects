@@ -15,7 +15,7 @@ gear_track_width = 5;
 
 
 
-*rail_with_interface();
+rail_with_interface();
 
 module alig_pin(){
     up(rail_height)
