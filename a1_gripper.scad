@@ -138,33 +138,36 @@ plate();
 
 
 
+
+
 translate([28,0,4.5])
 down(35)
 translate([-plate_x/2+plate_r,0,plate_z/2-plate_r])
 rotate([90,0,0]){
+
 
 color("red")
 up(4.5)
 appear_and_rotate(0) {
 difference()
 {
-spur_gear(
-    mod=1, teeth=teeth, thickness=7, shaft_diam=0,
-    helical=30, herringbone=true, slices=10
-);
+    spur_gear(
+        mod=1, teeth=teeth, thickness=7, shaft_diam=0,
+        helical=30, herringbone=true, slices=10
+    );
 
-#down(3.5)
-rotate([0,0,20])
-cyl(d=4.0, h=4, anchor=BOT);
+    #down(3.5)
+    rotate([0,0,20])
+    cyl(d=4.0, h=10, anchor=BOT);
 
 
 
-rotate([0,0,-55])
-down(2)
-right(2.5){
-xcyl(d=3.0, h=10, anchor=LEFT);
-xcyl(d=5.0, h=0.4, anchor=LEFT);
-}
+    rotate([0,0,-55])
+    down(1)
+    right(2.5){
+    xcyl(d=3.0, h=10, anchor=LEFT);
+    xcyl(d=5.0, h=0.4, anchor=LEFT);
+    }
 }
 }
 
