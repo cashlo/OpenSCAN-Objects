@@ -143,7 +143,52 @@ finger_2();
 
 module finger_2(){
     up(40)
-    back(3.5)
+    back(3.5){
+    
+    difference(){
+    left(5/2)
+    up(25/2+1)
+    back(32.2+2)
+    cuboid([25+5, 32.2+4, 2], anchor=BACK);
+    
+    
+    up(18.5)
+    back(15)
+    mirror([0,0,1])
+    servo_horn_screws();
+    }
+    
+    back(32.2+2)
+    difference(){
+    left(5/2)
+    cuboid([25+5, 2, 25], anchor=BACK);
+    left(5/2)
+    cuboid([19, 2, 19], anchor=BACK);
+    
+    for(i=[0:1])
+    rotate([0,90*i,0])
+    translate([10,0,10])
+    ycyl(20, d=2);
+    
+    #translate([10-25,0,10])
+    ycyl(20, d=2);
+    
+    #translate([10-25,0,-10])
+    ycyl(20, d=2);
+    
+    right(18)
+    ycyl(20, d=23);
+    
+    
+    }
+    
+    up(18.5)
+    back(15)
+    mirror([0,0,1])
+    servo_horn();
+    
+    
+    
     difference(){
     union(){
     cuboid([25, 2, 25], anchor=BACK);
@@ -173,6 +218,10 @@ module finger_2(){
     }
     
     
+    }
+    
+    
+    
     hull(){
     fwd(15)
     right(10)
@@ -186,9 +235,37 @@ module finger_2(){
     
 
     
-    
-    
 
+}
+
+module servo_horn_screws(){
+
+    cyl(2, d=6, anchor=BOT);
+
+    for(i=[0:3])
+    rotate([0,0,90*i])
+    left(14/2){
+    cyl(20, d=3.5);
+    up(2) cyl(20, d=6, anchor=BOT);
+    }
+}
+
+module servo_horn(){
+
+    difference(){
+    union(){
+        cyl(6, d=22, chamfer1=0.5, anchor=BOT);
+        //up(3) cyl(6, d=35, chamfer=0.5, anchor=BOT);
+        
+    }
+    
+    
+    
+    
+    servo_horn_screws();
+
+    
+}
 }
 
 module finger_1(){
@@ -202,32 +279,21 @@ module finger_1(){
     cuboid([5, 25+1, 8+1]);
     }
     
+    difference(){
+    up(40)
+    rotate([90,0,0])
+    hull(){
+    servo_horn();
+    
+    rotate([-90,0,0])
+    translate([10, -15, -20])
+    cuboid([5, 25+1, 8+1]);
+    }
     
     up(40)
     rotate([90,0,0])
-    difference(){
-    union(){
-        hull(){
-        cyl(6, d=22, chamfer1=0.5, anchor=BOT);
-        
-        rotate([-90,0,0])
-        
-        translate([10, -15, -20])
-        cuboid([5, 25+1, 8+1]);
-        }
-        //up(3) cyl(6, d=35, chamfer=0.5, anchor=BOT);
-        
+    servo_horn_screws();
     }
-    
-    cyl(2, d=6, anchor=BOT);
-    
-    for(i=[0:3])
-    rotate([0,0,90*i])
-    left(14/2){
-    cyl(20, d=3.5);
-    up(2) cyl(20, d=6, anchor=BOT);
-    }
-}
 }
 
 
