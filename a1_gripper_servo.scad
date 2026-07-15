@@ -1,5 +1,6 @@
 include <BOSL2/std.scad>
 include <BOSL2/gears.scad>
+include <peeler_handle.scad>
 
 // --- Global Parameters ---
 plate_z = 50;
@@ -12,8 +13,16 @@ module assembly() {
     plate();
     
     // Fingers
+    color("grey")
+    down(80)
     fwd(50) {
+        
         finger_1();
+        
+        translate([39,0,20])
+        rotate([90,0,0])
+        handle();
+        
         left(30) finger_2();
     }
     
@@ -129,10 +138,11 @@ module board_holder() {
 module finger_1() {
     hull() {
         fwd(15)
+        up(15)
         rotate([0,20,0])
         cuboid([5, 25+1, 8+1], rounding=4, edges="X");
         
-        translate([10, -15, 20])
+        translate([10, -15, 30])
         cuboid([5, 25+1, 8+1]);
     }
     
@@ -143,7 +153,7 @@ module finger_1() {
             servo_horn();
             
             rotate([-90,0,0])
-            translate([10, -15, -20])
+            translate([10, -15, -10])
             cuboid([5, 25+1, 8+1]);
         }
         
@@ -200,10 +210,11 @@ module finger_2() {
                 cuboid([25, 3, 25], anchor=BACK);
                 
                 hull() {
+                    
                     cuboid([12, 2, 25], anchor=BACK);
                     
                     right(5)
-                    down(40)
+                    down(30)
                     fwd(3.5)
                     translate([0, -15, 20])
                     cuboid([5, 25+1, 8+1]);
@@ -225,10 +236,11 @@ module finger_2() {
     hull() {
         fwd(15)
         right(10)
-        up(1)
+        up(16)
         cuboid([5, 25+1, 8+1], rounding=4, edges="X");
         
         right(5)
+        up(10)
         translate([0, -15, 20])
         cuboid([5, 25+1, 8+1]);
     }
