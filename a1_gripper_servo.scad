@@ -219,11 +219,12 @@ module m5_atom_stack_holder(){
 module finger_1() {
     hull() {
         fwd(15)
-        up(10)
+        up(15)
+        right(10)
         rotate([0,20,0])
         cuboid([5, 25+1, 8+1], rounding=4, edges="X");
         
-        translate([10, -15, 30])
+        translate([20, -15, 35])
         cuboid([5, 25+1, 8+1]);
     }
     
@@ -234,7 +235,7 @@ module finger_1() {
             servo_horn();
             
             rotate([-90,0,0])
-            translate([10, -15, -10])
+            translate([20, -15, -5])
             cuboid([5, 25+1, 8+1]);
         }
         
@@ -317,7 +318,7 @@ module finger_2() {
     hull() {
         fwd(15)
         right(10)
-        up(11)
+        up(16)
         cuboid([5, 25+1, 8+1], rounding=4, edges="X");
         
         right(5)
