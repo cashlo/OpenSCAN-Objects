@@ -3,7 +3,7 @@ include <BOSL2/gears.scad>
 include <peeler_handle.scad>
 
 // --- Global Parameters ---
-plate_z = 50;
+plate_z = 55;
 plate_y = 8;
 plate_x = 53.5;
 plate_r = 5.5;
@@ -15,12 +15,12 @@ module assembly() {
     // Fingers
     color("grey")
     down(80)
-    fwd(50) {
+    fwd(60) {
         
         finger_1();
         
         translate([39,0,20])
-        rotate([90,0,0])
+        *rotate([90,0,0])
         handle();
         
         left(30) finger_2();
@@ -30,11 +30,51 @@ module assembly() {
     // *feetech_STS3215();
 }
 
+
+
+module mounting_connector(){
+    translate([-20+6.5,plate_y/2+1.5,plate_z/2]){
+        mounting_hook();
+        right(27)
+        mounting_hook();
+        
+        down(54.5)
+        right(2){
+            mounting_hook(true);
+            right(23)
+            mounting_hook(true);            
+        }
+        
+    }
+}
+
+module mounting_hook(up_hook=false){
+    up(1)
+    cuboid([3.5, 3, 2],anchor=TOP+BACK);
+    
+    up(1)
+    if(up_hook){
+        back(1)
+        up(1)
+        cuboid([3.5, 1, 3],anchor=TOP+BACK);
+    } else {
+        back(1)
+        cuboid([3.5, 1, 3],anchor=TOP+BACK);    
+    }
+    
+    
+
+}
+
 // --- Plate Sub-Components ---
 module plate() {
     difference() {
         left(20)
         cuboid([plate_x+20, plate_y, plate_z], rounding=plate_r, edges="Y");
+        
+        
+        translate([0,0,-plate_z/2])
+        cuboid([18, plate_y, 10]);
         
         // Upper left hole
         translate([-plate_x/2 + plate_r, plate_y/2 - 0.8, plate_z/2 - plate_r]) {
@@ -57,8 +97,18 @@ module plate() {
         }
     }
     
+    mounting_connector();
+    
     servo_holder();
     board_holder();
+    
+    right(30)
+    rotate([90,0,0])
+    down(plate_y/2)
+    {
+    m5_atom_stack_holder();
+    * up(2) m5_atom_stack();
+    }
 }
 
 module servo_holder() {
@@ -134,11 +184,42 @@ module board_holder() {
     }
 }
 
+
+module m5_atom_stack(){
+    color("grey")
+    cuboid([24.0,31.6,24.0], rounding=2, edges="Y", anchor=BOT);
+}
+
+module m5_atom_stack_holder(){
+    difference(){
+        cuboid([30,38,28], anchor=BOT);
+        
+        up(2)
+        cuboid([24.4,32,24.4], anchor=BOT);
+        
+        hull(){
+        back(27)
+        up(2)
+        cuboid([24.4,38,24.4], anchor=BOT);
+        
+        back(29)
+        cuboid([30,38,28], anchor=BOT);
+        }
+        
+        
+        
+        up(2+12)
+        ycyl(d=20, h=20, anchor=BACK);
+    }
+}
+
+
+
 // --- Finger Components ---
 module finger_1() {
     hull() {
         fwd(15)
-        up(15)
+        up(10)
         rotate([0,20,0])
         cuboid([5, 25+1, 8+1], rounding=4, edges="X");
         
@@ -236,7 +317,7 @@ module finger_2() {
     hull() {
         fwd(15)
         right(10)
-        up(16)
+        up(11)
         cuboid([5, 25+1, 8+1], rounding=4, edges="X");
         
         right(5)
