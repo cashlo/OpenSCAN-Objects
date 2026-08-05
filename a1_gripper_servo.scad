@@ -17,13 +17,13 @@ module assembly() {
     down(80)
     fwd(60) {
         
-        finger_1();
+        finger_1_tpu();
         
         translate([39,0,20])
         *rotate([90,0,0])
         handle();
         
-        left(30) finger_2();
+        left(20) finger_2_tpu();
     }
     
     // Reference Servo (Uncomment to view)
@@ -214,17 +214,52 @@ module m5_atom_stack_holder(){
 }
 
 
+module finger_1_tpu() {
+
+    
+    translate([15, -15+2, 20]){
+    cuboid([10, 25+1, 30], rounding=4, edges="X");
+    
+    translate([-8/2-4,0,-5])
+    cuboid([2, 25+1, 10]);
+    
+    translate([-8/2-2,0,-5])
+    #cuboid([2.5, 25+1, 5]);
+    
+    translate([-9, 12, -5])
+    rotate([0,0,45])
+    #cuboid([0.5, 0.5, 10]);
+    }
+    
+    
+
+    difference() {
+        up(40)
+        rotate([90,0,0])
+        hull() {
+            servo_horn();
+            
+            rotate([-90,0,0])
+            translate([15, -15+2, -10])
+            cuboid([10, 25+1, 8+1], rounding=4, edges="X");
+        }
+        
+        up(40)
+        rotate([90,0,0])
+        servo_horn_screws();
+    }
+}
+
 
 // --- Finger Components ---
 module finger_1() {
     hull() {
         fwd(15)
-        up(15)
-        right(10)
+        up(10)
         rotate([0,20,0])
         cuboid([5, 25+1, 8+1], rounding=4, edges="X");
         
-        translate([20, -15, 35])
+        translate([10, -15, 30])
         cuboid([5, 25+1, 8+1]);
     }
     
@@ -235,7 +270,7 @@ module finger_1() {
             servo_horn();
             
             rotate([-90,0,0])
-            translate([20, -15, -5])
+            translate([10, -15, -10])
             cuboid([5, 25+1, 8+1]);
         }
         
@@ -243,6 +278,93 @@ module finger_1() {
         rotate([90,0,0])
         servo_horn_screws();
     }
+}
+
+module finger_2_tpu() {
+    up(40)
+    back(3.5) {
+        difference() {
+            left(5/2)
+            up(25/2 + 2)
+            back(32.2 + 3)
+            cuboid([25+5, 32.2+6, 4], anchor=BACK);
+            
+            up(18.5)
+            back(15)
+            mirror([0,0,1])
+            servo_horn_screws();
+        }
+        
+        back(32.2 + 3)
+        difference() {
+            left(5/2)
+            cuboid([25+5, 3, 25], anchor=BACK);
+            
+            left(5/2)
+            fwd(1)
+            cuboid([19, 3, 19], anchor=BACK);
+            
+            for(i=[0:1])
+                rotate([0,90*i,0])
+                translate([10,0,10])
+                ycyl(20, d=2.5);
+            
+            // Debug cylinders (commented out)
+            // translate([10-25,0,10]) ycyl(20, d=2.5);
+            // translate([10-25,0,-10]) ycyl(20, d=2.5);
+            
+            right(18)
+            ycyl(20, d=23);
+        }
+        
+        up(18.5)
+        back(15)
+        mirror([0,0,1])
+        servo_horn();
+        
+        difference() {
+            union() {
+                cuboid([25, 3, 25], anchor=BACK);
+                
+                hull() {
+                    
+                    cuboid([12, 2, 25], anchor=BACK);
+                    
+                    right(5)
+                    down(30)
+                    fwd(3.5)
+                    translate([-10, -15, 20])
+                    cuboid([5, 25+1, 8+1]);
+                }
+            }
+            
+            cuboid([25, 2, 14], anchor=BACK);
+            
+            for(i=[0:3])
+                rotate([0,90*i,0])
+                translate([10,0,10])
+                ycyl(20, d=2);
+            
+            right(18)
+            ycyl(20, d=23);
+        }
+        
+        translate([-5,-18.5,-20]){
+        cuboid([5, 25+1, 30], rounding=4, edges="X");
+        
+        translate([3.5+2,0,-5])
+        cuboid([2, 25+1, 10]);
+        
+        translate([3.5,0,-5])
+        cuboid([2.5, 25+1, 5]);
+        
+        translate([3.5+3,-12,-5])
+        rotate([0,0,45])
+        #cuboid([0.5, 0.5, 10]);
+        }
+    }
+    
+
 }
 
 module finger_2() {
@@ -318,7 +440,7 @@ module finger_2() {
     hull() {
         fwd(15)
         right(10)
-        up(16)
+        up(11)
         cuboid([5, 25+1, 8+1], rounding=4, edges="X");
         
         right(5)
