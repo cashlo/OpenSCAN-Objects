@@ -28,7 +28,7 @@ module servo_body_pad() {
                 translate([10,0,10]){
                     ycyl(20, d=2);
                     fwd(3)
-                    ycyl(20, d=4,anchor=BACK);
+                    ycyl(20, d=8,anchor=BACK);
                 
                 }
             
